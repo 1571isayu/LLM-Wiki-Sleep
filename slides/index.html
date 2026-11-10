@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>為什麼晚上會想睡</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one slide at a time on a cool "night paper" ground; a 24h-dial motif and a lamp-amber accent mark evidence and key numbers. */
+:root{
+  --bg:#EDF0F5; --panel:#F8F9FC; --ink:#1A2136; --muted:#586079; --line:#D2D8E4;
+  --night:#33449A; --night-soft:#DDE2F4; --lamp:#B9650F; --lamp-soft:#F6E6D0;
+  --ok:#2E7D5B; --warn:#A33A2E;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1322; --panel:#161D31; --ink:#E5E8F1; --muted:#9AA2B9; --line:#2A3350;
+  --night:#9AA9F2; --night-soft:#222C4D; --lamp:#F1A64C; --lamp-soft:#3A2A16;
+  --ok:#6CC59B; --warn:#F08A7C; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1322; --panel:#161D31; --ink:#E5E8F1; --muted:#9AA2B9; --line:#2A3350;
+  --night:#9AA9F2; --night-soft:#222C4D; --lamp:#F1A64C; --lamp-soft:#3A2A16;
+  --ok:#6CC59B; --warn:#F08A7C; color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.7;overflow:hidden}
+.deck{height:100%;display:flex;flex-direction:column}
+.stage{flex:1;min-height:0;position:relative}
+.slide{position:absolute;inset:0;overflow-y:auto;padding-block:clamp(20px,5vh,56px) 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1060px;margin:0 auto;display:flex;flex-direction:column;gap:22px;min-height:100%}
+.eyebrow{font-family:var(--f-mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--night)}
+h1,h2{font-family:var(--f-display);font-weight:900;line-height:1.25;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,64px)}
+h2{font-size:clamp(26px,3.6vw,40px)}
+h3{font-size:19px;margin:0 0 6px;font-weight:700}
+p{margin:0;max-width:62ch}
+.lead{font-size:clamp(18px,2vw,22px);color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.grid2,.grid3,.grid4{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+ul.facts{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:10px;max-width:66ch}
+.cite{font-family:var(--f-mono);font-size:12px;color:var(--night);background:var(--night-soft);border-radius:4px;padding:1px 6px;margin-left:4px;white-space:nowrap;vertical-align:1px}
+.tag{display:inline-block;font-size:12.5px;border-radius:999px;padding:2px 10px;border:1px solid currentColor;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.tag.inf{color:var(--lamp)} .tag.b{color:var(--muted)} .tag.c{color:var(--warn)}
+.big{font-family:var(--f-mono);font-weight:600;color:var(--lamp);font-size:clamp(34px,5vw,54px);line-height:1}
+.example{border-left:3px solid var(--lamp);background:var(--lamp-soft);padding:14px 18px;border-radius:0 8px 8px 0;max-width:72ch}
+.example b{color:var(--lamp)}
+.note{font-size:14.5px;color:var(--muted)}
+.wiki{margin-top:auto;padding-top:14px;border-top:1px dashed var(--line);font-family:var(--f-mono);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.wiki span b{color:var(--ink);font-weight:600}
+.flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.flow .step{flex:1 1 150px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.flow .arrow{align-self:center;color:var(--lamp);font-size:22px}
+@media (max-width:760px){.flow .arrow{transform:rotate(90deg);width:100%;text-align:center}}
+.chart{overflow-x:auto} .chart svg{display:block;width:100%;min-width:520px;height:auto}
+.myth{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:18px}
+@media (max-width:760px){.myth{grid-template-columns:minmax(0,1fr)}}
+.myth .claim{font-family:var(--f-display);font-size:24px;font-weight:700;text-decoration:line-through;text-decoration-color:var(--warn);text-decoration-thickness:2px}
+.verdict{background:var(--night);color:var(--panel);padding:14px 18px;border-radius:10px;font-weight:700;max-width:72ch}
+.qs{display:flex;flex-direction:column;gap:14px}
+.q button{font:inherit;font-size:15px;background:transparent;color:var(--night);border:1px solid var(--night);border-radius:6px;padding:4px 12px;cursor:pointer;margin-top:8px}
+.q button:focus-visible,.nav button:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+.q .ans{margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:13px;letter-spacing:.04em}
+.tablewrap{overflow-x:auto}
+td a{color:var(--night)}
+.cover{justify-content:center}
+.dial{width:min(220px,40vw);height:auto}
+.cover-row{display:flex;gap:40px;align-items:center;flex-wrap:wrap}
+.cover-row > div{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.nav{display:flex;align-items:center;gap:12px;padding-block:10px calc(10px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  border-top:1px solid var(--line);background:var(--panel)}
+.nav button{font:inherit;font-size:15px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px 14px;cursor:pointer}
+.nav button:disabled{opacity:.4;cursor:default}
+.bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--lamp);width:0;transition:width .25s}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:52px;text-align:right}
+.svg-ink{fill:var(--ink)} .svg-muted{fill:var(--muted)} .svg-line{stroke:var(--line)}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+
+
+<div class="deck">
+<main class="stage" id="stage">
+
+<!-- 1 -->
+<section class="slide" data-wiki="index" data-src="">
+ <div class="inner cover">
+  <div class="cover-row">
+   <svg class="dial" viewBox="0 0 200 200" role="img" aria-label="24 小時錶盤示意">
+    <circle cx="100" cy="100" r="88" fill="none" stroke="var(--line)" stroke-width="10"/>
+    <path d="M100 12 A88 88 0 0 1 188 100" fill="none" stroke="var(--lamp)" stroke-width="10"/>
+    <path d="M100 188 A88 88 0 0 1 12 100 A88 88 0 0 1 56 23.8" fill="none" stroke="var(--night)" stroke-width="10"/>
+    <circle cx="100" cy="100" r="5" fill="var(--ink)"/>
+    <line x1="100" y1="100" x2="100" y2="40" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="100" y1="100" x2="146" y2="128" stroke="var(--lamp)" stroke-width="3" stroke-linecap="round"/>
+   </svg>
+   <div>
+    <div class="eyebrow">睡眠科學入門 · 教學簡報</div>
+    <h1>為什麼晚上會想睡？</h1>
+    <p class="lead">生理時鐘、睡眠週期、咖啡因：三個你每天都在用、卻很少被解釋的機制。</p>
+    <p class="note">對象：沒有生物背景的大學生　｜　內容全部來自自建的 LLM Wiki，每張投影片底部標出對應的 Wiki 頁面與來源編號。</p>
+   </div>
+  </div>
+  <div class="wiki"><span>Wiki → <b>index</b></span><span>按 → 或點「下一張」開始</span></div>
+ </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-wiki="index" data-src="" hidden>
+ <div class="inner">
+  <div class="eyebrow">今天的路線</div>
+  <h2>這份簡報要回答三個問題</h2>
+  <div class="grid3">
+   <div class="panel"><div class="big">Q1</div><h3>為什麼一到晚上就想睡？</h3><p class="note">生理時鐘 + 睡眠壓力</p></div>
+   <div class="panel"><div class="big">Q2</div><h3>睡著以後大腦在做什麼？</h3><p class="note">睡眠分期與睡眠週期</p></div>
+   <div class="panel"><div class="big">Q3</div><h3>咖啡因到底做了什麼？</h3><p class="note">腺苷、受體、半衰期</p></div>
+  </div>
+  <p class="lead">最後用學到的東西，破解三個很常聽到的睡眠迷思，再做一個小測驗。</p>
+  <div class="wiki"><span>Wiki → <b>index</b>（建議閱讀順序）</span></div>
+ </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-wiki="concepts/two-process-model" data-src="S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q1 · 骨架</div>
+  <h2>決定你想不想睡的，是兩股力量</h2>
+  <div class="grid2">
+   <div class="panel">
+    <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true"><circle cx="30" cy="30" r="24" fill="none" stroke="var(--night)" stroke-width="4"/><line x1="30" y1="30" x2="30" y2="14" stroke="var(--night)" stroke-width="4" stroke-linecap="round"/><line x1="30" y1="30" x2="41" y2="36" stroke="var(--lamp)" stroke-width="4" stroke-linecap="round"/></svg>
+    <h3>力量一：生理時鐘　「現在幾點？」</h3>
+    <p>身體內建的時鐘，以一天 24 小時為基礎，決定什麼時段該清醒、什麼時段該休息。<span class="cite">S06</span></p>
+   </div>
+   <div class="panel">
+    <svg viewBox="0 0 60 60" width="52" height="52" aria-hidden="true"><path d="M16 8 H44 M16 52 H44 M18 8 C18 26 42 30 42 52 M42 8 C42 26 18 30 18 52" fill="none" stroke="var(--night)" stroke-width="4" stroke-linecap="round"/><path d="M22 48 Q30 40 38 48 Z" fill="var(--lamp)"/></svg>
+    <h3>力量二：睡眠壓力　「醒多久了？」</h3>
+    <p>清醒每多一小時，想睡的驅力就更強；很久沒睡之後，會睡得更久、更深。<span class="cite">S06</span></p>
+   </div>
+  </div>
+  <p class="lead">美國國家神經疾病與中風研究所（NINDS）把睡眠的調控分成這兩套系統：生理時鐘（circadian rhythm）與睡醒恆定（sleep-wake homeostasis）。<span class="cite">S06</span></p>
+  <div class="wiki"><span>Wiki → <b>concepts/two-process-model</b></span><span>來源 S06</span></div>
+ </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-wiki="concepts/circadian-rhythm" data-src="S02" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q1 · 力量一</div>
+  <h2>生理時鐘：身體裡大約 24 小時一圈的節奏</h2>
+  <ul class="facts">
+   <li>身體、心理、行為以大約 24 小時為週期變化，大多數生物都有。<span class="cite">S02</span><span class="tag b">共識</span></li>
+   <li>主時鐘在腦中的<b>視交叉上核</b>（suprachiasmatic nucleus, SCN），負責讓全身各器官的小時鐘保持同步。<span class="cite">S02</span></li>
+   <li>它管的不只是睡覺，還有荷爾蒙分泌、體溫、食慾與消化。<span class="cite">S02</span></li>
+   <li>2017 年諾貝爾生理醫學獎，就頒給找出時鐘分子機制的三位研究者。<span class="cite">S02</span></li>
+  </ul>
+  <div class="example"><b>常見誤解</b>　生理時鐘不等於褪黑激素。褪黑激素是時鐘送出的「該睡了」訊號，時鐘本身在 SCN。</div>
+  <div class="wiki"><span>Wiki → <b>concepts/circadian-rhythm</b></span><span>來源 S02</span></div>
+ </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-wiki="concepts/circadian-rhythm" data-src="S02 S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q1 · 力量一</div>
+  <h2>光線是時鐘最重要的對時訊號</h2>
+  <div class="flow" aria-label="光線到想睡的流程">
+   <div class="step"><h3>光線進入眼睛</h3><p class="note">光暗是最主要的外在線索；進食、運動、溫度也有影響。<span class="cite">S02</span></p></div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="step"><h3>SCN 主時鐘</h3><p class="note">依據眼睛接收到的光調整時間。<span class="cite">S02</span></p></div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="step"><h3>松果體分泌褪黑激素</h3><p class="note">天黑時分泌變多。<span class="cite">S06</span></p></div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="step"><h3>開始想睡</h3><p class="note">褪黑激素（melatonin）讓人感到睏。<span class="cite">S02</span><span class="cite">S06</span></p></div>
+  </div>
+  <div class="example"><b>生活例子：時差</b>　飛到時差很大的地方，當地明明是下午你卻很想睡。因為 SCN 還照台灣時間走，要靠當地的日光慢慢重新對時。<span class="cite">S02</span></div>
+  <p class="note">長期被打亂（時差、輪班）和肥胖、糖尿病、情緒障礙等風險升高有關；這是關聯，不代表因果。<span class="cite">S02</span></p>
+  <div class="wiki"><span>Wiki → <b>concepts/circadian-rhythm</b></span><span>來源 S02 S06</span></div>
+ </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-wiki="concepts/sleep-pressure" data-src="S05 S06 S07" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q1 · 力量二</div>
+  <h2>睡眠壓力：醒越久，越想睡</h2>
+  <ul class="facts">
+   <li>清醒每多一小時，睡眠驅力就更強；很久沒睡之後，睡得會更久更深。<span class="cite">S06</span><span class="tag b">共識</span></li>
+   <li>背後的重要物質之一是<b>腺苷</b>（adenosine），它是公認的體內睡眠調節物質。<span class="cite">S05</span><span class="tag b">共識</span></li>
+   <li>研究認為：腺苷來自 ATP 這類能量分子的分解，清醒時慢慢累積，深睡時被清除。<span class="cite">S07</span><span class="tag b">單一來源</span></li>
+   <li>腺苷要接上腦中的受體（A1、A2A）才能送出「想睡」的訊號。<span class="cite">S07</span></li>
+  </ul>
+  <div class="example"><b>可以這樣理解：沙漏</b>　早上起床時沙漏翻轉，沙子（腺苷）一路往下掉；到了晚上沙子堆滿了，你就很想睡。睡一覺，沙漏再翻回來。</div>
+  <div class="wiki"><span>Wiki → <b>concepts/sleep-pressure</b></span><span>來源 S05 S06 S07</span></div>
+ </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-wiki="concepts/two-process-model" data-src="S02 S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q1 · 小結</div>
+  <h2>兩股力量一起看，就能解釋熬夜的怪現象</h2>
+  <div class="grid2">
+   <div class="panel"><h3>凌晨特別想睡</h3><p>睡眠壓力已經累積很高，生理時鐘也走到夜裡的低谷，兩股力量都把你往睡眠推。</p></div>
+   <div class="panel"><h3>撐到早上反而像醒了</h3><p>睡眠壓力其實還在，只是生理時鐘進入白天模式，暫時把你撐起來。</p></div>
+  </div>
+  <p class="note"><span class="tag inf">教學推論</span>　上面的例子是用兩套系統<span class="cite">S06</span>和生理時鐘的日夜變化<span class="cite">S02</span>推出來的理解方式，不是來源原文的說法。</p>
+  <p class="lead">所以問題一的答案：晚上想睡，是「時鐘說該睡了」加上「累積了一整天的睡眠壓力」。</p>
+  <div class="wiki"><span>Wiki → <b>concepts/two-process-model</b></span><span>來源 S02 S06</span></div>
+ </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-wiki="concepts/sleep-cycle" data-src="S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q2 · 睡著之後</div>
+  <h2>睡覺不是一路睡到底，而是一整晚上下樓梯</h2>
+  <div class="chart" data-nocheck>
+   <svg id="hypno" viewBox="0 0 680 250" role="img" aria-label="一晚睡眠分期示意圖"></svg>
+  </div>
+  <p class="note" data-nocheck>示意圖，不是真實資料：每一輪長度刻意畫得不一樣，深睡集中在前半夜，REM 越到後面越長。</p>
+  <div class="grid4">
+   <div class="panel"><h3>N1</h3><p class="note">幾分鐘，從清醒過渡到睡眠。<span class="cite">S06</span></p></div>
+   <div class="panel"><h3>N2</h3><p class="note">心跳呼吸更慢、體溫下降、眼球不動。<span class="cite">S06</span></p></div>
+   <div class="panel"><h3>N3 深睡</h3><p class="note">最難叫醒，前半夜比較多。<span class="cite">S06</span></p></div>
+   <div class="panel"><h3>REM</h3><p class="note">眼球快速轉動，多數夢在這裡，手腳肌肉暫時麻痺，後半夜變長。<span class="cite">S06</span></p></div>
+  </div>
+  <div class="wiki"><span>Wiki → <b>concepts/sleep-cycle</b></span><span>來源 S06</span></div>
+ </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-wiki="concepts/sleep-cycle" data-src="S03 S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q2 · 睡眠週期</div>
+  <h2>走完一輪（一個睡眠週期）要多久？</h2>
+  <div class="grid3">
+   <div class="panel"><div class="big">96<small style="font-size:.4em"> 分</small></div><p class="note">週期長度中位數<span class="cite">S03</span></p></div>
+   <div class="panel"><div class="big">60–150</div><p class="note">95% 的週期落在這個範圍（分鐘）<span class="cite">S03</span></p></div>
+   <div class="panel"><div class="big">6,064</div><p class="note">369 位健康成人、在實驗室測到的週期數<span class="cite">S03</span></p></div>
+  </div>
+  <div class="chart" data-nocheck>
+   <svg viewBox="0 0 640 120" role="img" aria-label="睡眠週期長度範圍圖">
+    <g class="svg-muted" font-family="JetBrains Mono, monospace" font-size="12" text-anchor="middle">
+     <text x="40" y="112">40</text><text x="133.3" y="112">60</text><text x="226.7" y="112">80</text><text x="320" y="112">100</text><text x="413.3" y="112">120</text><text x="506.7" y="112">140</text><text x="600" y="112">160 分</text>
+    </g>
+    <line x1="40" y1="92" x2="600" y2="92" stroke="var(--line)" stroke-width="2"/>
+    <rect x="133.3" y="46" width="420" height="22" rx="4" fill="var(--night-soft)" stroke="var(--night)"/>
+    <text x="343" y="40" text-anchor="middle" fill="var(--night)" font-size="13">95% 的週期在 60–150 分鐘</text>
+    <line x1="301.3" y1="46" x2="301.3" y2="68" stroke="var(--ink)" stroke-width="3"/>
+    <text x="310" y="84" fill="var(--ink)" font-size="12">中位數 96</text>
+    <line x1="273.3" y1="18" x2="273.3" y2="92" stroke="var(--lamp)" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="268" y="14" text-anchor="end" fill="var(--lamp)" font-size="12">常說的 90</text>
+   </svg>
+  </div>
+  <ul class="facts">
+   <li>第一次 REM 大約在入睡後 90 分鐘出現，「90 分鐘」的印象就是從這裡來的。<span class="cite">S06</span></li>
+   <li>變化最大的不是人和人之間，而是<b>同一晚前後幾輪之間</b>。第一輪通常比較短。<span class="cite">S03</span></li>
+  </ul>
+  <div class="wiki"><span>Wiki → <b>concepts/sleep-cycle</b></span><span>來源 S03 S06</span></div>
+ </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-wiki="concepts/caffeine" data-src="S04 S07" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q3 · 咖啡因</div>
+  <h2>咖啡因不會消除疲勞，它只是把訊號擋住</h2>
+  <div class="flow">
+   <div class="step"><h3>平常</h3><p class="note">腺苷接上受體 → 送出「想睡」訊號。<span class="cite">S07</span></p></div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="step"><h3>喝了咖啡</h3><p class="note">咖啡因長得像腺苷，先佔住 A1、A2A 受體，卻不會啟動它們。<span class="cite">S04</span><span class="cite">S07</span></p></div>
+   <div class="arrow" aria-hidden="true">→</div>
+   <div class="step"><h3>結果</h3><p class="note">「想睡」的訊號傳不出去，你覺得清醒。這種作用叫<b>拮抗</b>（antagonist）。<span class="cite">S04</span></p></div>
+  </div>
+  <div class="example"><b>可以這樣理解：鎖門的保全</b>　腺苷是一群敲門喊「該睡了」的人，咖啡因是把門鎖上的保全。門外的人沒有離開，等保全下班（咖啡因代謝完），他們會一起湧進來。<span class="tag inf">教學推論</span></div>
+  <p class="note">喝下後，大約半小時到兩小時內血中濃度達到高峰；兩篇來源的說法不同，所以寫成範圍。<span class="cite">S04</span><span class="cite">S07</span></p>
+  <div class="wiki"><span>Wiki → <b>concepts/caffeine</b></span><span>來源 S04 S07</span></div>
+ </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-wiki="concepts/caffeine" data-src="S04 S07" hidden>
+ <div class="inner">
+  <div class="eyebrow">Q3 · 半衰期</div>
+  <h2>咖啡因要多久才退？每個人差很多</h2>
+  <p class="lead"><b>半衰期</b>是身體代謝掉一半所需的時間。咖啡因的半衰期個人差異很大，大約 2–10 小時。<span class="cite">S04</span></p>
+  <div class="chart" data-nocheck>
+   <svg id="halflife" viewBox="0 0 680 270" role="img" aria-label="下午四點喝咖啡後體內剩餘比例推算圖"></svg>
+  </div>
+  <p class="note" data-nocheck><span class="tag inf">推算示意</span>　假設下午 4 點喝下、立刻全部吸收，只用半衰期公式畫出來，不是實驗資料。半衰期 10 小時的人，到午夜大約還剩 57%。</p>
+  <div class="grid2">
+   <div class="panel"><h3>代謝比較快</h3><p class="note">吸菸會讓咖啡因代謝加快，最多快 50%。<span class="cite">S04</span></p></div>
+   <div class="panel"><h3>天生比較敏感</h3><p class="note">主要由肝臟的 CYP1A2 酵素代謝；ADORA2A 基因的差異會影響一個人對咖啡因的敏感度。<span class="cite">S07</span></p></div>
+  </div>
+  <div class="wiki"><span>Wiki → <b>concepts/caffeine</b></span><span>來源 S04 S07</span></div>
+ </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-wiki="myths/myth-8-hours" data-src="S01 S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">迷思破解 1 / 3</div>
+  <div class="myth">
+   <div><p class="note">常見說法</p><p class="claim">每個人每晚一定要睡滿 8 小時</p></div>
+   <div class="panel">
+    <h3>研究怎麼說</h3>
+    <ul class="facts">
+     <li>美國睡眠醫學會與睡眠研究學會的共識：18–60 歲成人應<b>規律地睡 7 小時以上</b>，而且不設上限。<span class="cite">S01</span><span class="tag b">共識</span></li>
+     <li>NINDS 的建議是成人 7–9 小時。<span class="cite">S06</span></li>
+     <li>每個人需要的量不同，受基因、行為、健康、環境影響；時數以外，規律性和品質也重要。<span class="cite">S01</span></li>
+    </ul>
+   </div>
+  </div>
+  <div class="verdict">結論：8 小時不是標準答案。比較準確的說法是「至少 7 小時，而且要規律」。</div>
+  <p class="note">兩個來源的上限不同（一個不設上限、一個寫到 9 小時），所以兩個都列出來。</p>
+  <div class="wiki"><span>Wiki → <b>myths/myth-8-hours</b></span><span>來源 S01 S06</span></div>
+ </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-wiki="myths/myth-90-minutes" data-src="S03 S06 S08" hidden>
+ <div class="inner">
+  <div class="eyebrow">迷思破解 2 / 3</div>
+  <div class="myth">
+   <div><p class="note">常見說法</p><p class="claim">照 90 分鐘的倍數睡，醒來就會神清氣爽</p>
+    <p class="note" style="margin-top:10px">出處：線上睡眠計算器假設每輪剛好 90 分鐘、入睡要 15 分鐘，再往回推就寢時間。<span class="cite">S08</span><span class="tag c">C 級來源，只當說法出處</span></p></div>
+   <div class="panel">
+    <h3>研究怎麼說</h3>
+    <ul class="facts">
+     <li>90 分鐘大約是第一次 REM 出現的時間。<span class="cite">S06</span></li>
+     <li>實測週期中位數 96 分鐘，95% 落在 60–150 分鐘。<span class="cite">S03</span></li>
+     <li>同一晚前後幾輪的差異最大。<span class="cite">S03</span>所以用計算器固定的 90 分鐘去推算<span class="cite">S08</span>，很難剛好算中。<span class="tag inf">推論</span></li>
+    </ul>
+   </div>
+  </div>
+  <div class="verdict">結論：90 分鐘只是粗略印象。與其算週期，不如睡夠、睡得規律。</div>
+  <div class="wiki"><span>Wiki → <b>myths/myth-90-minutes</b></span><span>來源 S03 S06 S08</span></div>
+ </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-wiki="myths/myth-afternoon-coffee" data-src="S04 S07" hidden>
+ <div class="inner">
+  <div class="eyebrow">迷思破解 3 / 3</div>
+  <div class="myth">
+   <div><p class="note">常見說法</p><p class="claim">下午喝咖啡，晚上不會影響睡眠</p></div>
+   <div class="panel">
+    <h3>研究怎麼說</h3>
+    <ul class="facts">
+     <li>一項實驗中，睡前 6 小時攝取 400 mg 咖啡因（大約 4 杯現煮咖啡），睡眠仍然明顯被干擾。<span class="cite">S04</span><span class="tag b">單一研究，劑量偏高</span></li>
+     <li>半衰期約 2–10 小時。<span class="cite">S04</span>換算下來，對代謝慢的人，下午的咖啡到半夜可能還剩一半以上。<span class="tag inf">推論</span></li>
+     <li>吸菸、基因都會改變代謝速度和敏感度。<span class="cite">S04</span><span class="cite">S07</span></li>
+    </ul>
+   </div>
+  </div>
+  <div class="verdict">結論：「下午喝沒差」因人而異。對代謝慢或比較敏感的人，下午那杯很可能還在影響晚上的睡眠。</div>
+  <p class="note">注意：來源沒有給「幾點以後不能喝」的官方建議。</p>
+  <div class="wiki"><span>Wiki → <b>myths/myth-afternoon-coffee</b></span><span>來源 S04 S07</span></div>
+ </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-wiki="concepts/*" data-src="S02 S03 S04 S06" hidden>
+ <div class="inner">
+  <div class="eyebrow">自我檢查</div>
+  <h2>三題小測驗，先想再點開答案</h2>
+  <div class="qs">
+   <div class="panel q"><h3>1. 腦中負責同步全身時鐘的「主時鐘」在哪裡？</h3>
+    <button type="button" id="q1" aria-expanded="false">看答案</button>
+    <p class="ans" hidden>視交叉上核（SCN）。褪黑激素只是它送出的訊號。<span class="cite">S02</span></p></div>
+   <div class="panel q"><h3>2. 喝咖啡會讓腦中的腺苷消失嗎？</h3>
+    <button type="button" id="q2" aria-expanded="false">看答案</button>
+    <p class="ans" hidden>不會。咖啡因只是佔住受體，把「想睡」的訊號擋住。<span class="cite">S04</span></p></div>
+   <div class="panel q"><h3>3. 一個睡眠週期一定是 90 分鐘嗎？<span class="cite">S06</span></h3>
+    <button type="button" id="q3" aria-expanded="false">看答案</button>
+    <p class="ans" hidden>不是。實測中位數 96 分鐘，大多數落在 60–150 分鐘，同一晚前後也會變。<span class="cite">S03</span></p></div>
+  </div>
+  <div class="wiki"><span>Wiki → <b>concepts/circadian-rhythm · caffeine · sleep-cycle</b></span><span>來源 S02 S03 S04 S06</span></div>
+ </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-wiki="index" data-src="" hidden>
+ <div class="inner">
+  <div class="eyebrow">帶走三件事</div>
+  <h2>今天的三個答案</h2>
+  <div class="grid3">
+   <div class="panel"><div class="big">Q1</div><h3>想睡 = 時鐘 + 壓力</h3><p class="note">時鐘告訴你「現在是晚上」，睡眠壓力告訴你「醒太久了」。</p></div>
+   <div class="panel"><div class="big">Q2</div><h3>週期忽長忽短</h3><p class="note">一晚會走好幾輪，每輪長度不固定；睡夠、睡規律比計算週期重要。</p></div>
+   <div class="panel"><div class="big">Q3</div><h3>咖啡因是借來的清醒</h3><p class="note">它擋住訊號，不會消除睡意；多久會退，因人而異。</p></div>
+  </div>
+  <div class="wiki"><span>Wiki → <b>index</b>（各頁一句話重點）</span></div>
+ </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-wiki="sources/*" data-src="" hidden>
+ <div class="inner">
+  <div class="eyebrow">參考來源</div>
+  <h2>來源與 Wiki 對應</h2>
+  <div class="tablewrap" data-nocheck>
+  <table>
+   <thead><tr><th>編號</th><th>來源</th><th>等級</th><th>用在哪幾張</th></tr></thead>
+   <tbody>
+    <tr><td>S01</td><td><a href="https://www.aasm.org/resources/pdf/adultsleepdurationconsensus.pdf" target="_blank" rel="noopener">AASM/SRS 成人睡眠時數共識聲明（2015）</a></td><td>A</td><td>12</td></tr>
+    <tr><td>S02</td><td><a href="https://nigms.nih.gov/education/fact-sheets/Pages/Circadian-Rhythms.aspx" target="_blank" rel="noopener">NIGMS：Circadian Rhythms</a></td><td>A</td><td>4、5、7、15</td></tr>
+    <tr><td>S03</td><td><a href="https://eprints.soton.ac.uk/502837/1/1-s2.0-S2352721823002048-main.pdf" target="_blank" rel="noopener">Cajochen 等，Ultradian sleep cycles（Sleep Health 2024）</a></td><td>B</td><td>9、13、15</td></tr>
+    <tr><td>S04</td><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6292246" target="_blank" rel="noopener">O'Callaghan 等，Effects of caffeine on sleep quality（2018）</a></td><td>A</td><td>10、11、14、15</td></tr>
+    <tr><td>S05</td><td><a href="https://scholarlypublications.universiteitleiden.nl/handle/1887/3502470" target="_blank" rel="noopener">Reichert 等，Adenosine, caffeine, and sleep-wake regulation（J Sleep Res 2022）</a></td><td>A</td><td>6</td></tr>
+    <tr><td>S06</td><td><a href="https://www.ninds.nih.gov/Disorders/Patient-Caregiver-Education/Understanding-Sleep" target="_blank" rel="noopener">NINDS：Brain Basics: Understanding Sleep</a></td><td>A</td><td>3、5、6、7、8、9、12、13、15</td></tr>
+    <tr><td>S07</td><td><a href="https://www.research-collection.ethz.ch/server/api/core/bitstreams/ba7384e4-aa8b-49bc-b891-9635711ce974/content" target="_blank" rel="noopener">Baur，ETH 博士論文（2024）</a></td><td>B</td><td>6、10、11、14</td></tr>
+    <tr><td>S08</td><td><a href="https://www.calculate.co.nz/bedtime-sleep-cycle-calculator.php" target="_blank" rel="noopener">calculate.co.nz 睡眠週期計算器</a></td><td>C</td><td>13（只當說法出處）</td></tr>
+   </tbody>
+  </table>
+  </div>
+  <p class="note">等級：A 學會共識、政府機構、同儕審查綜述；B 原始研究、博士論文；C 科普或工具網站。</p>
+  <div class="wiki"><span>Wiki → <b>sources/S01–S08</b>、<b>raw/</b></span></div>
+ </div>
+</section>
+
+</main>
+<nav class="nav" aria-label="投影片導覽">
+ <button type="button" id="prev" aria-label="上一張">← 上一張</button>
+ <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+ <span class="count" id="count">1 / 17</span>
+ <button type="button" id="next" aria-label="下一張">下一張 →</button>
+</nav>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const n=slides.length; let cur=0;
+  const prev=document.getElementById('prev'), next=document.getElementById('next');
+  const bar=document.getElementById('bar'), count=document.getElementById('count');
+  function show(i){
+    cur=Math.max(0,Math.min(n-1,i));
+    slides.forEach((s,k)=>{s.hidden=k!==cur});
+    slides[cur].scrollTop=0;
+    prev.disabled=cur===0; next.disabled=cur===n-1;
+    bar.style.width=((cur+1)/n*100)+'%';
+    count.textContent=(cur+1)+' / '+n;
+    const h='#s'+(cur+1); if(location.hash!==h){try{history.replaceState(null,'',h)}catch(e){location.hash=h}}
+  }
+  function fromHash(){const m=/^#s(\d+)$/.exec(location.hash);return m?parseInt(m[1],10)-1:0}
+  prev.onclick=()=>show(cur-1); next.onclick=()=>show(cur+1);
+  document.addEventListener('keydown',e=>{
+    if(e.target.closest&&e.target.closest('button')&&(e.key===' '||e.key==='Enter'))return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(cur+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(cur-1)}
+    if(e.key==='Home')show(0); if(e.key==='End')show(n-1);
+  });
+  let x0=null,y0=null;
+  document.getElementById('stage').addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  document.getElementById('stage').addEventListener('touchend',e=>{
+    if(x0===null)return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)show(cur+(dx<0?1:-1)); x0=null;
+  },{passive:true});
+  window.addEventListener('hashchange',()=>show(fromHash()));
+  document.querySelectorAll('.q button').forEach(b=>b.addEventListener('click',()=>{
+    const a=b.nextElementSibling; a.hidden=!a.hidden; b.setAttribute('aria-expanded',String(!a.hidden)); b.textContent=a.hidden?'看答案':'收起答案';
+  }));
+
+  const NS='http://www.w3.org/2000/svg';
+  function el(tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+
+  // Hypnogram (illustrative). x: 0–480 min → 70–660 px; stages to y.
+  (function(){
+    const svg=document.getElementById('hypno'); if(!svg)return;
+    const X=m=>70+m*(590/480);
+    const Y={W:30,REM:75,N1:120,N2:160,N3:200};
+    const order=['W','REM','N1','N2','N3'];
+    order.forEach(s=>{
+      svg.appendChild(el('line',{x1:70,x2:660,y1:Y[s],y2:Y[s],stroke:'var(--line)','stroke-width':1}));
+      svg.appendChild(el('text',{x:60,y:Y[s]+4,'text-anchor':'end','font-size':12,fill:'var(--muted)','font-family':'JetBrains Mono, monospace'},s==='W'?'清醒':s));
+    });
+    for(let h=0;h<=8;h++){svg.appendChild(el('text',{x:X(h*60),y:232,'text-anchor':'middle','font-size':11,fill:'var(--muted)','font-family':'JetBrains Mono, monospace'},h+'h'))}
+    const pts=[[0,'W'],[6,'N1'],[14,'N2'],[30,'N3'],[62,'N2'],[72,'REM'],[80,'N2'],[96,'N3'],[140,'N2'],[160,'REM'],[178,'N1'],[184,'N2'],[204,'N3'],[226,'N2'],[262,'REM'],[290,'N2'],[338,'REM'],[370,'N1'],[376,'N2'],[420,'REM'],[470,'W'],[480,'W']];
+    let d='';
+    pts.forEach((p,i)=>{const x=X(p[0]),y=Y[p[1]]; d+= i===0?`M${x} ${y}`:` H${x} V${y}`});
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--night)','stroke-width':2.5,'stroke-linejoin':'round'}));
+    pts.forEach((p,i)=>{ if(p[1]==='REM'&&i<pts.length-1){svg.appendChild(el('rect',{x:X(p[0]),y:Y.REM-5,width:X(pts[i+1][0])-X(p[0]),height:10,fill:'var(--lamp)',rx:2}))}});
+  })();
+
+  // Caffeine remaining after a 16:00 dose, half-life 2h vs 10h (pure formula).
+  (function(){
+    const svg=document.getElementById('halflife'); if(!svg)return;
+    const L=70,R=650,T=20,B=220, X=h=>L+h*(R-L)/12, Y=p=>B-p*(B-T)/100;
+    [0,25,50,75,100].forEach(p=>{
+      svg.appendChild(el('line',{x1:L,x2:R,y1:Y(p),y2:Y(p),stroke:'var(--line)','stroke-width':1}));
+      svg.appendChild(el('text',{x:L-8,y:Y(p)+4,'text-anchor':'end','font-size':11,fill:'var(--muted)','font-family':'JetBrains Mono, monospace'},p+'%'));
+    });
+    ['16:00','18:00','20:00','22:00','24:00','02:00','04:00'].forEach((t,i)=>{
+      svg.appendChild(el('text',{x:X(i*2),y:B+20,'text-anchor':'middle','font-size':11,fill:'var(--muted)','font-family':'JetBrains Mono, monospace'},t));
+    });
+    svg.appendChild(el('line',{x1:X(8),x2:X(8),y1:T,y2:B,stroke:'var(--muted)','stroke-dasharray':'4 4'}));
+    svg.appendChild(el('text',{x:X(8)+6,y:T+12,'font-size':12,fill:'var(--muted)'},'午夜'));
+    function curve(hl,color,label,ly){
+      let d=''; for(let i=0;i<=120;i++){const h=i/10, p=100*Math.pow(0.5,h/hl); d+=(i?' L':'M')+X(h).toFixed(1)+' '+Y(p).toFixed(1)}
+      svg.appendChild(el('path',{d,fill:'none',stroke:color,'stroke-width':3}));
+      const pm=100*Math.pow(0.5,8/hl);
+      svg.appendChild(el('circle',{cx:X(8),cy:Y(pm),r:5,fill:color}));
+      svg.appendChild(el('text',{x:X(8)+10,y:Y(pm)+(ly||4),'font-size':12,fill:color,'font-weight':600},label+'：午夜剩 '+Math.round(pm)+'%'));
+    }
+    curve(10,'var(--lamp)','半衰期 10 小時',-8);
+    curve(2,'var(--night)','半衰期 2 小時',-8);
+  })();
+
+  show(fromHash());
+})();
+</script>
+
+</body>
+</html>

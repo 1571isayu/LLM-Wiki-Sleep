@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>睡眠科學 LLM Wiki</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: sidebar index + one wiki page at a time, same night-paper palette as the slide deck so the two read as one project. */
+:root{
+  --bg:#EDF0F5; --panel:#F8F9FC; --ink:#1A2136; --muted:#586079; --line:#D2D8E4;
+  --night:#33449A; --night-soft:#DDE2F4; --lamp:#B9650F; --lamp-soft:#F6E6D0; --warn:#A33A2E;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1322; --panel:#161D31; --ink:#E5E8F1; --muted:#9AA2B9; --line:#2A3350;
+  --night:#9AA9F2; --night-soft:#222C4D; --lamp:#F1A64C; --lamp-soft:#3A2A16; --warn:#F08A7C; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1322; --panel:#161D31; --ink:#E5E8F1; --muted:#9AA2B9; --line:#2A3350;
+  --night:#9AA9F2; --night-soft:#222C4D; --lamp:#F1A64C; --lamp-soft:#3A2A16; --warn:#F08A7C; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75}
+header{padding-block:22px 18px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line);background:var(--panel)}
+.hwrap{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:baseline;justify-content:space-between}
+.brand{font-family:var(--f-display);font-weight:900;font-size:24px}
+.brand small{font-family:var(--f-mono);font-weight:400;font-size:12px;color:var(--muted);letter-spacing:.08em;margin-left:10px}
+.hlinks{display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+.hlinks a{color:var(--night)}
+.layout{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);align-self:start;max-height:calc(100vh - 32px);overflow-y:auto;display:flex;flex-direction:column;gap:16px;font-size:14px}
+.nl{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.ng{display:flex;flex-direction:column}
+nav a{color:var(--ink);text-decoration:none;padding:3px 10px;border-radius:6px;line-height:1.45}
+nav a:hover{background:var(--night-soft)}
+nav a.on{background:var(--night);color:var(--panel)}
+nav a:focus-visible,a:focus-visible{outline:2px solid var(--lamp);outline-offset:2px}
+@media (max-width:820px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  nav{position:static;max-height:none;flex-direction:row;flex-wrap:wrap;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+  .ng{flex:1 1 140px}
+}
+article{min-width:0;max-width:760px}
+.path{font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-bottom:6px}
+article h1{font-family:var(--f-display);font-weight:900;font-size:clamp(26px,3.4vw,34px);line-height:1.3;text-wrap:balance;margin:0 0 16px}
+article h2{font-size:20px;margin:28px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
+article h3{font-size:17px;margin:18px 0 6px}
+article p,article li{max-width:68ch}
+article blockquote{margin:0 0 14px;padding:8px 14px;border-left:3px solid var(--night);background:var(--night-soft);border-radius:0 6px 6px 0;font-size:14px}
+article blockquote p{margin:0}
+a{color:var(--night)}
+a.cite{font-family:var(--f-mono);font-size:12px;text-decoration:none;background:var(--night-soft);border-radius:4px;padding:1px 6px;white-space:nowrap}
+a.wl{text-decoration:underline;text-decoration-color:var(--lamp);text-underline-offset:3px}
+.broken{color:var(--warn);text-decoration:line-through}
+.tablewrap{overflow-x:auto;margin:10px 0 16px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:700;font-size:13px}
+table.meta th{width:110px;white-space:nowrap;font-family:var(--f-mono);font-weight:400}
+table.meta td{word-break:break-word}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--night-soft);padding:1px 5px;border-radius:4px}
+pre{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;font-size:13px;line-height:1.55}
+pre code{background:none;padding:0}
+strong{color:var(--lamp)}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:36px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+
+<header>
+ <div class="hwrap">
+  <div class="brand">睡眠科學 LLM Wiki<small>30 PAGES · KARPATHY PATTERN</small></div>
+  <div class="hlinks"><a href="#index">目錄</a><a href="#log">執行與檢查紀錄</a><a href="#schema">規範 SCHEMA</a><a href="../slides/" target="_blank" rel="noopener">教學簡報 ↗</a></div>
+ </div>
+</header>
+<div class="layout">
+ <nav id="nav" aria-label="Wiki 頁面">
+<div class="ng"><div class="nl">總覽</div>
+<a href="#index" data-id="index">睡眠科學 LLM Wiki — 目錄</a>
+<a href="#schema" data-id="schema">SCHEMA — 睡眠科學 LLM Wiki 規範</a>
+<a href="#log" data-id="log">log.md — 執行與檢查紀錄</a>
+<a href="#glossary" data-id="glossary">名詞表（Glossary）</a>
+</div>
+<div class="ng"><div class="nl">概念</div>
+<a href="#concepts-caffeine" data-id="concepts-caffeine">咖啡因怎麼讓你醒著（Caffeine）</a>
+<a href="#concepts-circadian-rhythm" data-id="concepts-circadian-rhythm">生理時鐘（Circadian Rhythm）</a>
+<a href="#concepts-sleep-cycle" data-id="concepts-sleep-cycle">睡眠週期（Sleep Cycle）</a>
+<a href="#concepts-sleep-pressure" data-id="concepts-sleep-pressure">睡眠壓力與腺苷（Sleep Pressure &amp; Adenosine）</a>
+<a href="#concepts-two-process-model" data-id="concepts-two-process-model">雙歷程模型：兩套系統一起決定你什麼時候睡</a>
+</div>
+<div class="ng"><div class="nl">迷思</div>
+<a href="#myths-myth-8-hours" data-id="myths-myth-8-hours">迷思：每個人每晚一定要睡滿 8 小時</a>
+<a href="#myths-myth-90-minutes" data-id="myths-myth-90-minutes">迷思：睡眠週期剛好 90 分鐘，照 90 分鐘倍數睡就會神清氣爽</a>
+<a href="#myths-myth-afternoon-coffee" data-id="myths-myth-afternoon-coffee">迷思：下午喝咖啡，晚上就不會影響睡眠</a>
+</div>
+<div class="ng"><div class="nl">來源摘要</div>
+<a href="#src-S01" data-id="src-S01">S01｜AASM/SRS 成人睡眠時數共識聲明（2015）</a>
+<a href="#src-S02" data-id="src-S02">S02｜NIGMS 生理時鐘說明頁</a>
+<a href="#src-S03" data-id="src-S03">S03｜Cajochen 等（2024）睡眠週期回溯研究</a>
+<a href="#src-S04" data-id="src-S04">S04｜O&#x27;Callaghan 等（2018）咖啡因與睡眠品質綜述</a>
+<a href="#src-S05" data-id="src-S05">S05｜Reichert、Deboer、Landolt（2022）腺苷、咖啡因與睡醒調節綜述</a>
+<a href="#src-S06" data-id="src-S06">S06｜NINDS《Brain Basics: Understanding Sleep》</a>
+<a href="#src-S07" data-id="src-S07">S07｜Baur（2024）ETH 博士論文：睡眠限制下咖啡因的影響</a>
+<a href="#src-S08" data-id="src-S08">S08｜calculate.co.nz 睡眠週期計算器</a>
+</div>
+<div class="ng"><div class="nl">原始資料 raw/</div>
+<a href="#raw-S01" data-id="raw-S01">S01 · Recommended Amount of Sleep for a Healthy Adult (AASM/SRS Joint Consensus Statement)</a>
+<a href="#raw-S02" data-id="raw-S02">S02 · Circadian Rhythms (Fact Sheet)</a>
+<a href="#raw-S03" data-id="raw-S03">S03 · Ultradian sleep cycles: Frequency, duration, and associations with individual and environmental factors — A retrospective study</a>
+<a href="#raw-S04" data-id="raw-S04">S04 · Effects of caffeine on sleep quality and daytime functioning</a>
+<a href="#raw-S05" data-id="raw-S05">S05 · Adenosine, caffeine, and sleep-wake regulation: state of the science and perspectives</a>
+<a href="#raw-S06" data-id="raw-S06">S06 · Brain Basics: Understanding Sleep</a>
+<a href="#raw-S07" data-id="raw-S07">S07 · Acute and chronic sleep restriction: Effects of caffeine on the EEG and heart rate during sleep, and waking attention</a>
+<a href="#raw-S08" data-id="raw-S08">S08 · Bedtime Sleep Cycle Calculator</a>
+</div>
+<div class="ng"><div class="nl">檢查程式</div>
+<a href="#check-slides" data-id="check-slides">check_slides.py</a>
+<a href="#lint" data-id="lint">lint.py</a>
+</div>
+ </nav>
+ <main id="main">
+<article id="index" data-path="wiki/index.md"><div class="path">wiki/index.md</div><h1>睡眠科學 LLM Wiki — 目錄</h1>
+<p>主題：生理時鐘、睡眠週期、咖啡因　讀者：沒有生物背景的大學生
+規範：見 <code>../SCHEMA.md</code>　紀錄：見 <a class="wl" href="#log">log</a></p>
+<h2>建議閱讀順序</h2>
+<ol>
+<li><a class="wl" href="#concepts-two-process-model">two-process-model</a> — 骨架：兩套系統決定你什麼時候想睡</li>
+<li><a class="wl" href="#concepts-circadian-rhythm">circadian-rhythm</a> — 系統一：生理時鐘</li>
+<li><a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a> — 系統二：睡眠壓力與腺苷</li>
+<li><a class="wl" href="#concepts-sleep-cycle">sleep-cycle</a> — 睡著之後發生什麼</li>
+<li><a class="wl" href="#concepts-caffeine">caffeine</a> — 咖啡因如何干擾系統二</li>
+</ol>
+<h2>迷思 vs. 研究</h2>
+<ul>
+<li><a class="wl" href="#myths-myth-8-hours">myth-8-hours</a> — 一定要睡 8 小時？</li>
+<li><a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a> — 週期剛好 90 分鐘？</li>
+<li><a class="wl" href="#myths-myth-afternoon-coffee">myth-afternoon-coffee</a> — 下午喝咖啡沒差？</li>
+</ul>
+<h2>來源（8 篇）</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>ID</th>
+<th>來源</th>
+<th>等級</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="wl" href="#src-S01">S01</a></td>
+<td>AASM/SRS 睡眠時數共識（2015）</td>
+<td>A</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S02">S02</a></td>
+<td>NIGMS 生理時鐘說明</td>
+<td>A</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S03">S03</a></td>
+<td>Cajochen 等，睡眠週期研究（2024）</td>
+<td>B</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S04">S04</a></td>
+<td>O'Callaghan 等，咖啡因與睡眠綜述（2018）</td>
+<td>A</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S05">S05</a></td>
+<td>Reichert 等，腺苷與咖啡因綜述（2022，僅摘要）</td>
+<td>A</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S06">S06</a></td>
+<td>NINDS 睡眠基礎</td>
+<td>A</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S07">S07</a></td>
+<td>Baur，ETH 博士論文（2024）</td>
+<td>B</td>
+</tr>
+<tr>
+<td><a class="wl" href="#src-S08">S08</a></td>
+<td>睡眠週期計算器網站</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<h2>其他</h2>
+<ul>
+<li><a class="wl" href="#glossary">glossary</a> — 名詞表</li>
+</ul></article>
+<article id="schema" data-path="SCHEMA.md" hidden><div class="path">SCHEMA.md</div><h1>SCHEMA — 睡眠科學 LLM Wiki 規範</h1>
+<p>這份檔案是 LLM 維護這個 Wiki 時必須遵守的規則（對應 Karpathy LLM Wiki 的 schema 層）。</p>
+<h2>主題與範圍</h2>
+<ul>
+<li>主題：睡眠科學入門 — 生理時鐘、睡眠週期、咖啡因</li>
+<li>目標讀者：大學同學，完全沒有生物背景</li>
+<li>不在範圍內：睡眠障礙的診斷與治療、藥物、午睡、熬夜補眠</li>
+</ul>
+<h2>三層結構</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>層</th>
+<th>位置</th>
+<th>誰可以改</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始資料</td>
+<td><code>raw/</code></td>
+<td>只能新增，不能改內容</td>
+</tr>
+<tr>
+<td>Wiki 頁面</td>
+<td><code>wiki/</code></td>
+<td>LLM 維護，人審閱</td>
+</tr>
+<tr>
+<td>規範</td>
+<td><code>SCHEMA.md</code></td>
+<td>人決定</td>
+</tr>
+</tbody>
+</table></div>
+<h2>頁面類型</h2>
+<ul>
+<li><code>wiki/sources/S0X-*.md</code>：每篇資料一頁摘要。</li>
+<li><code>wiki/concepts/*.md</code>：概念頁，一個概念一頁。</li>
+<li><code>wiki/myths/*.md</code>：迷思頁，固定格式「常見說法 → 研究怎麼說 → 一句話結論」。</li>
+<li><code>wiki/glossary.md</code>：名詞表（中文 + 英文）。</li>
+<li><code>wiki/index.md</code>：目錄，所有頁面都必須列在這裡。</li>
+<li><code>wiki/log.md</code>：時間序紀錄，每次 ingest / lint / 修正都要追加一筆。</li>
+</ul>
+<h2>寫作規則（ingest 時必須遵守）</h2>
+<ol>
+<li><strong>每個事實都要標來源</strong>，格式 <code><a class="cite" href="#src-S01">S01</a></code>，對應 <code>wiki/sources/</code>。沒有來源的句子不能寫進概念頁。</li>
+<li><strong>數字一定附範圍或條件</strong>：例如半衰期寫「個人差異很大，約 2–10 小時 <a class="cite" href="#src-S04">S04</a>」，不能只寫單一數字。</li>
+<li><strong>用中文寫，專有名詞第一次出現附英文</strong>：例如「視交叉上核（suprachiasmatic nucleus, SCN）」。</li>
+<li><strong>區分強度</strong>：共識 / 單一研究 / 科普說法，在句尾標示（共識）（單一研究）（科普）。</li>
+<li><strong>不逐字複製原文</strong>：raw 只保存書目資訊、來源網址和用自己的話整理的重點；直接引用一篇最多一句、少於 15 字。</li>
+<li><strong>矛盾不能自己挑一個</strong>：兩個來源說法不同時，兩個都寫，並在 log 標記 <code>CONFLICT</code>。</li>
+<li><strong>白話優先</strong>：概念頁每頁都要有一個「生活例子」段落。迷思頁使用固定格式（常見說法 → 研究怎麼說 → 一句話結論），不需要生活例子。（2026-11-10 lint 後修訂）</li>
+</ol>
+<h2>來源可信度分級</h2>
+<ul>
+<li>A：學會共識、政府機構、同儕審查綜述</li>
+<li>B：同儕審查原始研究、博士論文</li>
+<li>C：科普 / 商業網站 / 部落格（只能放在迷思頁當「常見說法」的出處，不能當事實來源）</li>
+</ul>
+<h2>Lint 檢查清單</h2>
+<ul>
+<li>[ ] 每個概念頁的每個數字都能在對應的 source 頁找到</li>
+<li>[ ] 沒有 C 級來源被當成事實來源</li>
+<li>[ ] 沒有孤兒頁（沒被 index 或其他頁連到）</li>
+<li>[ ] 沒有斷掉的連結</li>
+<li>[ ] CONFLICT 都有處理結果</li>
+<li>[ ] 用詞白話度：每個概念頁都有生活例子</li>
+</ul></article>
+<article id="log" data-path="wiki/log.md" hidden><div class="path">wiki/log.md</div><h1>log.md — 執行與檢查紀錄</h1>
+<p>格式：<code>## [日期] 操作 | 對象</code>，問題標籤：<code>FETCH-FAIL</code> 抓取失敗、<code>MISMATCH</code> 來源和預期不符、<code>CONFLICT</code> 來源互相矛盾、<code>SRC-ERR</code> 來源本身有錯、<code>FIX</code> 修正。</p>
+<h2>[2026-11-10] discuss | 決定主題與範圍</h2>
+<ul>
+<li>與使用者討論後決定：主題「睡眠科學」，只做生理時鐘、睡眠週期、咖啡因三個子題；讀者為無生物背景的大學生；Wiki 中文、專有名詞附英文。</li>
+<li>決定刻意納入一篇 C 級來源（睡眠計算器），測試 lint 能否擋住。</li>
+</ul>
+<h2>[2026-11-10] setup | SCHEMA.md</h2>
+<ul>
+<li>建立三層結構與寫作規則（每個事實要標來源、數字附範圍、矛盾兩邊都寫）。</li>
+</ul>
+<h2>[2026-11-10] ingest | S01 AASM/SRS 共識</h2>
+<ul>
+<li>FETCH-FAIL：PMC 版本回傳 reCAPTCHA 頁面，內容為空。改抓 AASM 官方 PDF，成功。</li>
+<li>新增：raw/S01、sources/S01；建立 myths/myth-8-hours。</li>
+</ul>
+<h2>[2026-11-10] ingest | S02 NIGMS 生理時鐘</h2>
+<ul>
+<li>新增：raw/S02、sources/S02；建立 concepts/circadian-rhythm。</li>
+</ul>
+<h2>[2026-11-10] ingest | S03 Cajochen 2024</h2>
+<ul>
+<li>SRC-ERR：論文內資料收集年份前後不一致（1994–2020 vs 1994–2000）。處理：Wiki 不引用年份。</li>
+<li>新增：raw/S03、sources/S03；建立 concepts/sleep-cycle、myths/myth-90-minutes。</li>
+</ul>
+<h2>[2026-11-10] ingest | S04 O'Callaghan 2018</h2>
+<ul>
+<li>預期這篇會提到懷孕、口服避孕藥對半衰期的影響，實際上沒有 → 這些說法不寫入 Wiki。</li>
+<li>預期這篇會給「幾點以後別喝咖啡」的建議，實際上沒有 → 在 caffeine、myth-afternoon-coffee 加註「來源沒有給官方停喝時間」。</li>
+<li>新增：raw/S04、sources/S04；建立 concepts/caffeine、myths/myth-afternoon-coffee。</li>
+</ul>
+<h2>[2026-11-10] ingest | S05 Reichert 2022</h2>
+<ul>
+<li>FETCH-FAIL ×3：PubMed（reCAPTCHA）、ZORA（Anubis 機器人防護）、Zendy（空頁）。最後只從萊頓大學典藏取得摘要。</li>
+<li>處理：raw/S05 標註「只取得摘要層級」，Wiki 只引用摘要層級的說法。</li>
+<li>MISMATCH：原本以為 ETH Research Collection 的網址是這篇綜述的全文，抓下來才發現是另一份博士論文 → 改為獨立來源 S07。</li>
+<li>新增：raw/S05、sources/S05；建立 concepts/sleep-pressure（初版）。</li>
+</ul>
+<h2>[2026-11-10] ingest | S06 NINDS 睡眠基礎</h2>
+<ul>
+<li>MISMATCH：預期這頁會寫「腺苷隨清醒時間累積、睡覺時分解」，實際上只寫「腺苷讓人想睡、咖啡因阻斷腺苷」。</li>
+<li>處理：sleep-pressure 頁中「累積」的說法改由 S07 支撐，並在頁面加註只有 B 級來源直接支撐。</li>
+<li>新增：raw/S06、sources/S06；建立 concepts/two-process-model；更新 sleep-cycle、circadian-rhythm、sleep-pressure。</li>
+</ul>
+<h2>[2026-11-10] ingest | S07 Baur 2024 ETH 博士論文</h2>
+<ul>
+<li>CONFLICT-02：咖啡因血中濃度高峰時間，S04 寫「約 30 分鐘」，S07 寫「30–120 分鐘」。處理：caffeine 頁統一寫「半小時到兩小時內」，兩者都標。</li>
+<li>新增：raw/S07、sources/S07；更新 sleep-pressure、caffeine。</li>
+</ul>
+<h2>[2026-11-10] ingest | S08 睡眠計算器（C 級）</h2>
+<ul>
+<li>只放進 myth-90-minutes 的「常見說法」段落。</li>
+<li>發現：此網站本身也承認週期因人而異 → 寫入迷思頁備註（迷思常來自簡化轉述，而不是原始來源本身講錯）。</li>
+</ul>
+<h2>[2026-11-10] cross-check | 來源之間比對</h2>
+<ul>
+<li>CONFLICT-01：S01 寫「7 小時以上、不設上限」，S06 寫「成人 7–9 小時」。處理：myth-8-hours 兩者並列，簡報寫「至少 7 小時（多數建議落在 7–9 小時）」。</li>
+</ul>
+<h2>[2026-11-10] lint #1 | 程式檢查（lint.py）</h2>
+<ul>
+<li>結果：5 個問題。</li>
+<li>L5 two-process-model「24 小時」在 raw/S06 找不到 → 回 NINDS 原頁確認確實有寫，是 ingest 時漏記 → FIX：raw/S06 追加補記（raw 只追加不改寫）。</li>
+<li>L5 myth-90-minutes 結論句「90 分鐘是粗略平均」引用 S01、S03，但 S03 的中位數是 96 分鐘、90 分鐘出自 S06 → FIX：改寫結論句，90 分鐘改引 S06、96 分鐘引 S03。<strong>這是結論句把數字講得比來源更整齊的錯誤。</strong></li>
+<li>L6 三個迷思頁沒有「生活例子」→ 判斷是規則寫太寬，不是頁面錯 → FIX：修訂 SCHEMA 第 7 條，生活例子只要求概念頁；同步修改 lint.py。</li>
+<li>L4（C 級來源誤用）：0 個 → S08 只出現在「常見說法」段落，規則有效。</li>
+</ul>
+<h2>[2026-11-10] lint #2 | 程式檢查重跑</h2>
+<ul>
+<li>結果：0 個問題。</li>
+</ul>
+<h2>[2026-11-10] lint #3 | 語意檢查（LLM 逐頁對照 raw）</h2>
+<ul>
+<li>SCHEMA 第 2 條的範例寫「半衰期平均約 5 小時」，但 8 篇來源都沒有「平均 5 小時」這個數字 → 範例本身就是沒有來源的數字，如果生成簡報時被模仿會直接變成錯誤 → FIX：範例改為「約 2–10 小時 <a class="cite" href="#src-S04">S04</a>」。</li>
+<li>SCHEMA 的 B 級定義是「同儕審查原始研究」，但 S07 是博士論文也標 B → FIX：B 級定義加上「博士論文」。</li>
+<li>caffeine 頁把 S04 的「隔天表現提升有一部分可能是解除戒斷」改寫成「沒喝就沒精神是戒斷」→ 意思被偷換 → FIX：改回貼近原意的說法。</li>
+<li>caffeine 頁「被阻斷期間腺苷照樣累積」：S07 只說腺苷隨清醒累積、咖啡因會阻斷受體，沒有直接寫「阻斷期間繼續累積」→ 保留，但已標為教學推論，簡報需用「可以這樣理解」語氣。</li>
+<li>結論：程式 lint 抓得到「數字對不上」，抓不到「意思被改寫」；兩種檢查都需要。</li>
+</ul>
+<h2>[2026-11-10] query | 規劃簡報大綱</h2>
+<ul>
+<li>依 index 的建議閱讀順序查詢概念頁、迷思頁，產出 slides/outline.md（17 張，每張對應 Wiki 頁面與來源）。</li>
+<li>收集各頁「給簡報的提醒」段落，作為生成時的限制條件。</li>
+</ul>
+<h2>[2026-11-10] generate | slides/sleep-slides.html</h2>
+<ul>
+<li>生成 17 張投影片；每張底部標出對應 Wiki 頁面與來源編號；圖表（睡眠分期示意、週期長度範圍、咖啡因剩餘比例）標為示意或推算，不參與數字檢查。</li>
+</ul>
+<h2>[2026-11-10] check #1 | 簡報程式檢查（check_slides.py）</h2>
+<ul>
+<li>結果：2 個問題。</li>
+<li>C2 第 13 張「用固定的 90 分鐘去算，很難剛好算中」只引用 S03，但「90 分鐘」是計算器（S08）的假設，「很難算中」是從 S03 推論 → FIX：拆成兩句，分別標 S03、S08，並加上「推論」標籤。<strong>和 Wiki lint #1 是同一類錯誤：推論被寫成像來源原文。</strong></li>
+<li>C2 第 15 張測驗題提到「90 分鐘」，但投影片的來源清單沒有 S06 → FIX：補上 S06，並同步更新來源對應表。</li>
+</ul>
+<h2>[2026-11-10] check #2 | 簡報程式檢查重跑</h2>
+<ul>
+<li>結果：0 個問題。</li>
+</ul>
+<h2>[2026-11-10] check #3 | 簡報語意檢查（LLM 逐張對照 Wiki）</h2>
+<ul>
+<li>第 14 張「下午的咖啡到半夜可能還剩一半以上」是用半衰期換算出來的，卻直接標 S04 → FIX：拆句並加「推論」標籤。（Wiki 迷思頁本來有標「推論」，生成簡報時這個標籤掉了。）</li>
+<li>第 6 張「腺苷來自大腦消耗能量時的分解產物」，S07 只寫「ATP 等能量分子的分解」→ 生成時自行加油添醋 → FIX：改回貼近來源的說法。</li>
+<li>結論：生成簡報這一步最常犯的錯，是把 Wiki 上原本標好的「推論」「單一來源」標籤弄丟。→ 改進：未來在 query 階段就把每一句的標籤一起帶進大綱，而不是生成後才補檢查。</li>
+</ul></article>
+<article id="glossary" data-path="wiki/glossary.md" hidden><div class="path">wiki/glossary.md</div><h1>名詞表（Glossary）</h1>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>白話解釋</th>
+<th>來源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生理時鐘節律</td>
+<td>circadian rhythm</td>
+<td>身體約 24 小時一圈的內建節奏</td>
+<td>S02</td>
+</tr>
+<tr>
+<td>視交叉上核</td>
+<td>suprachiasmatic nucleus, SCN</td>
+<td>腦中的「主時鐘」</td>
+<td>S02</td>
+</tr>
+<tr>
+<td>褪黑激素</td>
+<td>melatonin</td>
+<td>天黑時分泌、讓人想睡的荷爾蒙</td>
+<td>S02, S06</td>
+</tr>
+<tr>
+<td>松果體</td>
+<td>pineal gland</td>
+<td>分泌褪黑激素的腺體</td>
+<td>S06</td>
+</tr>
+<tr>
+<td>睡醒恆定</td>
+<td>sleep-wake homeostasis</td>
+<td>醒越久越想睡的機制</td>
+<td>S06</td>
+</tr>
+<tr>
+<td>睡眠壓力</td>
+<td>sleep pressure</td>
+<td>累積的「想睡程度」</td>
+<td>S06, S07</td>
+</tr>
+<tr>
+<td>腺苷</td>
+<td>adenosine</td>
+<td>讓人想睡的體內物質</td>
+<td>S05, S06, S07</td>
+</tr>
+<tr>
+<td>拮抗劑</td>
+<td>antagonist</td>
+<td>佔住受體但不啟動它的物質</td>
+<td>S04</td>
+</tr>
+<tr>
+<td>半衰期</td>
+<td>half-life</td>
+<td>身體代謝掉一半所需時間</td>
+<td>S04</td>
+</tr>
+<tr>
+<td>非快速動眼期</td>
+<td>NREM sleep</td>
+<td>包含淺睡與深睡的睡眠階段</td>
+<td>S06</td>
+</tr>
+<tr>
+<td>快速動眼期</td>
+<td>REM sleep</td>
+<td>眼球快速轉動、多數夢發生的階段</td>
+<td>S06</td>
+</tr>
+<tr>
+<td>睡眠週期</td>
+<td>sleep cycle（ultradian cycle）</td>
+<td>NREM→REM 一輪</td>
+<td>S03, S06</td>
+</tr>
+<tr>
+<td>多導睡眠圖</td>
+<td>polysomnography, PSG</td>
+<td>實驗室測睡眠的標準方法</td>
+<td>S03</td>
+</tr>
+</tbody>
+</table></div></article>
+<article id="concepts-caffeine" data-path="wiki/concepts/caffeine.md" hidden><div class="path">wiki/concepts/caffeine.md</div><h1>咖啡因怎麼讓你醒著（Caffeine）</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a>、<a class="wl" href="#myths-myth-afternoon-coffee">myth-afternoon-coffee</a></p>
+</blockquote>
+<h2>一句話</h2>
+<p>咖啡因不會消除疲勞，它只是把「想睡」的訊號擋住。</p>
+<h2>重點</h2>
+<ul>
+<li>咖啡因是<strong>腺苷受體拮抗劑（adenosine receptor antagonist）</strong>：它佔住 A1、A2A 受體卻不啟動它們，腺苷的「想睡」訊號就傳不出去 <a class="cite" href="#src-S04">S04</a><a class="cite" href="#src-S07">S07</a>（共識）。</li>
+<li>被擋住的期間，腺苷<strong>照樣在累積</strong>；等咖啡因代謝掉，累積的睡意會一起回來 <a class="cite" href="#src-S07">S07</a>（單一來源，B 級；屬教學推論，見簡報提醒）。</li>
+<li>喝下後血中濃度達到高峰的時間：約 30 分鐘 <a class="cite" href="#src-S04">S04</a>，另一來源寫 30–120 分鐘 <a class="cite" href="#src-S07">S07</a> → 統一寫「半小時到兩小時內」。</li>
+<li><strong>半衰期</strong>（身體代謝掉一半所需時間）個人差異很大，約 <strong>2–10 小時</strong> <a class="cite" href="#src-S04">S04</a>（共識）。</li>
+<li>影響代謝速度的因素：吸菸會加快代謝多達 50% <a class="cite" href="#src-S04">S04</a>；主要在肝臟由 CYP1A2 酵素代謝 <a class="cite" href="#src-S07">S07</a>；ADORA2A 基因變異會影響一個人對咖啡因的敏感度 <a class="cite" href="#src-S07">S07</a>。</li>
+<li>對睡眠的影響：一項實驗中，睡前 6 小時攝取 400 mg（約 4 杯現煮咖啡）仍顯著干擾睡眠 <a class="cite" href="#src-S04">S04</a>（單一研究）。</li>
+<li>咖啡因也會降低隔晚褪黑激素代謝物的量 <a class="cite" href="#src-S04">S04</a>。</li>
+<li>長期喝會產生耐受性，但不完全 <a class="cite" href="#src-S07">S07</a>；習慣喝咖啡的人隔天喝了覺得表現變好，有一部分可能只是解除了戒斷症狀，而不是真的變強 <a class="cite" href="#src-S04">S04</a>（綜述觀點）。</li>
+</ul>
+<h2>生活例子</h2>
+<p>腺苷像一群在敲門說「該睡了」的人，咖啡因是把門鎖上的保全。門外的人沒有離開，還越來越多 —— 保全下班（咖啡因代謝完）時，他們一次全湧進來 <a class="cite" href="#src-S04">S04</a><a class="cite" href="#src-S07">S07</a>。</p>
+<h2>給簡報的提醒</h2>
+<ul>
+<li>半衰期一律寫範圍，不寫「咖啡因半衰期 5 小時」這種單一數字。</li>
+<li>S04 沒有給建議的停喝時間；簡報如果要給「建議幾點以後不喝」，必須標明是依半衰期推算的示意，不是來源建議。</li>
+</ul></article>
+<article id="concepts-circadian-rhythm" data-path="wiki/concepts/circadian-rhythm.md" hidden><div class="path">wiki/concepts/circadian-rhythm.md</div><h1>生理時鐘（Circadian Rhythm）</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a>、<a class="wl" href="#concepts-caffeine">caffeine</a></p>
+</blockquote>
+<h2>一句話</h2>
+<p>身體內建一個大約 24 小時一圈的時鐘，決定你什麼時候想睡、什麼時候有精神。</p>
+<h2>重點</h2>
+<ul>
+<li>生理時鐘節律是身體、心理、行為以約 24 小時為週期的變化，大多數生物都有 <a class="cite" href="#src-S02">S02</a>（共識）。</li>
+<li>主時鐘位在腦中的<strong>視交叉上核（suprachiasmatic nucleus, SCN）</strong>，負責讓全身各器官的小時鐘保持同步 <a class="cite" href="#src-S02">S02</a>（共識）。</li>
+<li>最重要的「對時訊號」是<strong>光線</strong>；進食、運動、溫度、壓力也有影響 <a class="cite" href="#src-S02">S02</a>（共識）。</li>
+<li>天黑時 SCN 讓大腦分泌更多<strong>褪黑激素（melatonin）</strong>，人就會想睡 <a class="cite" href="#src-S02">S02</a><a class="cite" href="#src-S06">S06</a>（共識）。褪黑激素由<strong>松果體（pineal gland）</strong>分泌 <a class="cite" href="#src-S06">S06</a>。</li>
+<li>生理時鐘影響的不只是睡眠，還有荷爾蒙、體溫、食慾與消化 <a class="cite" href="#src-S02">S02</a>（共識）。</li>
+<li>2017 年諾貝爾生理醫學獎頒給發現時鐘基因機制的三位學者（Hall、Rosbash、Young）<a class="cite" href="#src-S02">S02</a>。</li>
+<li>時鐘被打亂（時差、輪班）短期會嗜睡、不專心；長期失調與肥胖、糖尿病、情緒障礙、心血管疾病等風險升高<strong>有關</strong> <a class="cite" href="#src-S02">S02</a>（共識，屬關聯）。</li>
+</ul>
+<h2>生活例子</h2>
+<p>出國到時差 6 小時的地方，明明當地是下午，你卻想睡覺 —— 因為你的 SCN 還在照台灣時間走，要靠當地的日光慢慢「對時」<a class="cite" href="#src-S02">S02</a>。</p>
+<h2>給簡報的提醒</h2>
+<ul>
+<li>不要說「生理時鐘就是褪黑激素」：褪黑激素是時鐘發出的訊號之一，不是時鐘本身。</li>
+</ul></article>
+<article id="concepts-sleep-cycle" data-path="wiki/concepts/sleep-cycle.md" hidden><div class="path">wiki/concepts/sleep-cycle.md</div><h1>睡眠週期（Sleep Cycle）</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a></p>
+</blockquote>
+<h2>一句話</h2>
+<p>睡覺不是一路睡到底，而是在淺睡、深睡、REM 之間來回好幾輪，一輪就叫一個睡眠週期。</p>
+<h2>睡眠分期 <a class="cite" href="#src-S06">S06</a>（共識）</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>階段</th>
+<th>英文</th>
+<th>發生什麼事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第 1 期</td>
+<td>NREM N1</td>
+<td>幾分鐘，從清醒過渡到睡眠</td>
+</tr>
+<tr>
+<td>第 2 期</td>
+<td>NREM N2</td>
+<td>心跳呼吸更慢、體溫下降、眼球不動</td>
+</tr>
+<tr>
+<td>第 3 期</td>
+<td>NREM N3（深睡）</td>
+<td>最難叫醒，前半夜比較多</td>
+</tr>
+<tr>
+<td>REM</td>
+<td>Rapid Eye Movement</td>
+<td>眼球快速轉動、腦波接近清醒、多數夢在這裡、手腳肌肉暫時麻痺</td>
+</tr>
+</tbody>
+</table></div>
+<h2>一個週期多長？</h2>
+<ul>
+<li>第一次 REM 大約在入睡後 90 分鐘出現 <a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li>但實驗室測量 369 位健康成人、6,064 個週期後發現：週期長度中位數 <strong>96 分鐘</strong>，95% 落在 <strong>60–150 分鐘</strong> 之間 <a class="cite" href="#src-S03">S03</a>（單一研究，大樣本）。</li>
+<li>變異最大的不是「人跟人之間」，而是<strong>同一晚的不同週期之間</strong> <a class="cite" href="#src-S03">S03</a>。</li>
+<li>第一個週期通常比較短，REM 會越到後半夜越長 <a class="cite" href="#src-S03">S03</a><a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li>年齡、性別、睡眠壓力都會影響週期組成；中等程度的睡前光線和交通噪音則沒有顯著影響 <a class="cite" href="#src-S03">S03</a>（單一研究）。</li>
+</ul>
+<h2>生活例子</h2>
+<p>就像下樓梯再爬回來：入睡後一路往下走到深睡（N3），再爬回到 REM，然後重新開始。整晚大約要走好幾趟，但每一趟的長度都不一樣 <a class="cite" href="#src-S06">S06</a><a class="cite" href="#src-S03">S03</a>。</p>
+<h2>給簡報的提醒</h2>
+<ul>
+<li>不要寫「一個週期 = 90 分鐘」，要寫「平均大約 90–100 分鐘，但變化很大」。</li>
+</ul></article>
+<article id="concepts-sleep-pressure" data-path="wiki/concepts/sleep-pressure.md" hidden><div class="path">wiki/concepts/sleep-pressure.md</div><h1>睡眠壓力與腺苷（Sleep Pressure &amp; Adenosine）</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-circadian-rhythm">circadian-rhythm</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a>、<a class="wl" href="#concepts-caffeine">caffeine</a></p>
+</blockquote>
+<h2>一句話</h2>
+<p>醒著越久，身體越「想睡」——這股越積越多的想睡感叫做睡眠壓力，腺苷是背後的重要物質之一。</p>
+<h2>重點</h2>
+<ul>
+<li>調控睡眠的第二套系統叫<strong>睡醒恆定（sleep-wake homeostasis）</strong>：清醒每多一小時，睡眠驅力就更強；長時間沒睡之後，睡得會更久更深 <a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li><strong>腺苷（adenosine）</strong>被廣泛認為是體內調節睡眠的物質 <a class="cite" href="#src-S05">S05</a>（共識），它會讓人想睡 <a class="cite" href="#src-S06">S06</a>。</li>
+<li>腺苷來自能量分子（如 ATP）的分解，在長時間清醒時累積，在深睡時被清除，睡眠壓力因此下降 <a class="cite" href="#src-S07">S07</a>（單一來源，B 級）。</li>
+<li>腺苷透過腦中的 <strong>A1、A2A 受體</strong>作用：A1 抑制讓人清醒的神經元，A2A 協助進入睡眠 <a class="cite" href="#src-S07">S07</a>（單一來源，B 級）。</li>
+</ul>
+<h2>生活例子</h2>
+<p>把腺苷想成一個沙漏：從早上起床開始，沙子一直往下掉（腺苷累積）；到了晚上沙子堆滿了，你就很想睡。睡一覺，沙漏被翻回來重新開始 <a class="cite" href="#src-S07">S07</a>。</p>
+<h2>給簡報的提醒</h2>
+<ul>
+<li>「腺苷隨清醒累積」目前只有 S07（B 級）直接支撐；NINDS（S06）只說腺苷讓人想睡。簡報可以講，但要用「研究認為」的語氣。</li>
+</ul></article>
+<article id="concepts-two-process-model" data-path="wiki/concepts/two-process-model.md" hidden><div class="path">wiki/concepts/two-process-model.md</div><h1>雙歷程模型：兩套系統一起決定你什麼時候睡</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-circadian-rhythm">circadian-rhythm</a>、<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a></p>
+</blockquote>
+<h2>一句話</h2>
+<p>你想不想睡，是「生理時鐘（幾點了）」和「睡眠壓力（醒多久了）」兩個力量疊加的結果。</p>
+<h2>重點</h2>
+<ul>
+<li>NINDS 把睡眠的調控分成兩套系統：生理時鐘節律（circadian rhythms）與睡醒恆定（sleep-wake homeostasis）<a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li>生理時鐘以 24 小時為基礎，管清醒程度、體溫、代謝、荷爾蒙 <a class="cite" href="#src-S06">S06</a>。</li>
+<li>睡醒恆定記錄你「欠了多少睡眠」，醒越久越強 <a class="cite" href="#src-S06">S06</a>。</li>
+<li>腺苷可能也會影響生理時鐘，兩套系統之間可能透過腺苷互相連結——這仍是研究中的問題 <a class="cite" href="#src-S05">S05</a>（研究進行中）。</li>
+</ul>
+<h2>生活例子</h2>
+<p>熬夜到凌晨 3 點很想睡（壓力高 + 時鐘在低谷）；但如果撐到早上 8 點，反而覺得「好像又醒了」——睡眠壓力其實還在，只是生理時鐘進入白天模式把你撐起來 <a class="cite" href="#src-S06">S06</a><a class="cite" href="#src-S02">S02</a>。</p>
+<h2>給簡報的提醒</h2>
+<ul>
+<li>這頁是串起其他概念的「骨架頁」，簡報的結構可以照這頁排：先講時鐘，再講壓力，最後講咖啡因怎麼干擾壓力。</li>
+<li>「兩個力量疊加」的生活例子屬於教學上的推論，不是來源原文說法；簡報上用「可以這樣理解」的語氣。</li>
+</ul></article>
+<article id="myths-myth-8-hours" data-path="wiki/myths/myth-8-hours.md" hidden><div class="path">wiki/myths/myth-8-hours.md</div><h1>迷思：每個人每晚一定要睡滿 8 小時</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-two-process-model">two-process-model</a></p>
+</blockquote>
+<h2>常見說法</h2>
+<p>「睡眠標準就是 8 小時，少一點都不行。」</p>
+<h2>研究怎麼說</h2>
+<ul>
+<li>美國睡眠醫學會與睡眠研究學會的共識是：18–60 歲成人應<strong>規律地睡 7 小時以上</strong> —— 底線是 7，不是 8 <a class="cite" href="#src-S01">S01</a>（共識）。</li>
+<li>共識<strong>沒有設上限</strong>；年輕人、正在補眠或生病的人，睡超過 9 小時可能是合適的 <a class="cite" href="#src-S01">S01</a>（共識）。</li>
+<li>每個人需要的睡眠量不同，受基因、行為、健康、環境影響 <a class="cite" href="#src-S01">S01</a>（共識）。</li>
+<li>NINDS 寫的是成人「7–9 小時」<a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li>時數之外，睡眠品質、時間點、規律性也很重要 <a class="cite" href="#src-S01">S01</a>。</li>
+<li>長期睡不到 7 小時，與肥胖、糖尿病、高血壓、憂鬱、意外增加等<strong>有關聯</strong> <a class="cite" href="#src-S01">S01</a>。</li>
+</ul>
+<h2>一句話結論</h2>
+<p>8 小時不是標準答案；比較準確的說法是「至少 7 小時，而且要規律」。</p>
+<h2>來源差異（CONFLICT-01，已處理）</h2>
+<p>S01 寫「7 小時以上、不設上限」，S06 寫「7–9 小時」。兩者下限一致；差在上限。處理方式：簡報寫「至少 7 小時（多數建議落在 7–9 小時）」，兩個來源都標。</p></article>
+<article id="myths-myth-90-minutes" data-path="wiki/myths/myth-90-minutes.md" hidden><div class="path">wiki/myths/myth-90-minutes.md</div><h1>迷思：睡眠週期剛好 90 分鐘，照 90 分鐘倍數睡就會神清氣爽</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-sleep-cycle">sleep-cycle</a></p>
+</blockquote>
+<h2>常見說法</h2>
+<p>線上「睡眠計算器」假設每個週期剛好 90 分鐘、入睡要 15 分鐘，建議你睡 6、7.5 或 9 小時，在週期結束時醒來就不會昏沉 <a class="cite" href="#src-S08">S08</a>（科普/工具網站，C 級，只作為說法出處）。</p>
+<h2>研究怎麼說</h2>
+<ul>
+<li>第一次 REM 大約在入睡後 90 分鐘出現 —— 「90 分鐘」這個印象確實有來源 <a class="cite" href="#src-S06">S06</a>（共識）。</li>
+<li>但大樣本實驗室研究（369 人、6,064 個週期）測到週期中位數 96 分鐘，<strong>95% 落在 60–150 分鐘</strong> <a class="cite" href="#src-S03">S03</a>（單一研究）。</li>
+<li>同一晚裡，前後週期的長度差異最大（變異係數約 29%），比人與人之間的差異還大 <a class="cite" href="#src-S03">S03</a>。</li>
+<li>第一個週期通常較短，之後 REM 越來越長 <a class="cite" href="#src-S03">S03</a><a class="cite" href="#src-S06">S06</a>。</li>
+<li>所以「入睡時間 + N × 90 分鐘」算出的起床時間，誤差可能遠超過一個睡眠階段的長度。（推論：根據 S03 的變異範圍）</li>
+</ul>
+<h2>一句話結論</h2>
+<p>「90 分鐘」來自第一次 REM 出現的大約時間 <a class="cite" href="#src-S06">S06</a>，但實測週期中位數約 96 分鐘、而且忽長忽短 <a class="cite" href="#src-S03">S03</a>；與其算週期，不如睡夠、睡得規律 <a class="cite" href="#src-S01">S01</a>。</p>
+<h2>備註</h2>
+<p>連 S08 自己的頁面也承認週期長度因人而異、計算器只是參考 —— 迷思的問題常常不是來源「說錯」，而是被簡化轉述後只剩下「剛好 90 分鐘」。</p></article>
+<article id="myths-myth-afternoon-coffee" data-path="wiki/myths/myth-afternoon-coffee.md" hidden><div class="path">wiki/myths/myth-afternoon-coffee.md</div><h1>迷思：下午喝咖啡，晚上就不會影響睡眠</h1>
+<blockquote>
+<p>相關：<a class="wl" href="#concepts-caffeine">caffeine</a></p>
+</blockquote>
+<h2>常見說法</h2>
+<p>「咖啡因幾個小時就退了，下午三四點喝沒差。」</p>
+<h2>研究怎麼說</h2>
+<ul>
+<li>咖啡因的半衰期個人差異很大，約 2–10 小時 <a class="cite" href="#src-S04">S04</a>（共識）。也就是說，對代謝慢的人，下午 4 點喝的咖啡，到半夜可能還剩一半以上。（推論：依半衰期換算）</li>
+<li>實驗中，睡前 <strong>6 小時</strong>攝取 400 mg 咖啡因（約 4 杯現煮咖啡），睡眠仍明顯受干擾 <a class="cite" href="#src-S04">S04</a>（單一研究，劑量偏高）。</li>
+<li>有研究甚至發現早上 7 點攝取 200 mg，當晚睡眠效率與總睡眠時間也下降 <a class="cite" href="#src-S04">S04</a>（單一研究）。</li>
+<li>吸菸、基因等因素都會改變代謝速度與敏感度 <a class="cite" href="#src-S04">S04</a><a class="cite" href="#src-S07">S07</a>。</li>
+</ul>
+<h2>一句話結論</h2>
+<p>「下午喝沒差」因人而異；對代謝慢或敏感的人，下午的咖啡很可能還在影響晚上的睡眠。</p>
+<h2>注意</h2>
+<ul>
+<li>Drake 研究的劑量 400 mg 比一般一杯咖啡高很多，簡報要講清楚，避免誇大。</li>
+<li>來源沒有給「幾點以後不能喝」的官方建議。</li>
+</ul></article>
+<article id="src-S01" data-path="wiki/sources/S01.md" hidden><div class="path">wiki/sources/S01.md</div><h1>S01｜AASM/SRS 成人睡眠時數共識聲明（2015）</h1>
+<ul>
+<li>等級：A（學會共識）　原始紀錄：<code>raw/S01-aasm-sleep-duration-consensus.md</code></li>
+<li>一句話：18–60 歲成人應規律睡 7 小時以上，不設上限；個人需求有差異。</li>
+<li>被引用於：<a class="wl" href="#myths-myth-8-hours">myth-8-hours</a>、<a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a></li>
+</ul></article>
+<article id="src-S02" data-path="wiki/sources/S02.md" hidden><div class="path">wiki/sources/S02.md</div><h1>S02｜NIGMS 生理時鐘說明頁</h1>
+<ul>
+<li>等級：A（NIH 科普）　原始紀錄：<code>raw/S02-nigms-circadian-rhythms.md</code></li>
+<li>一句話：約 24 小時的節律由 SCN 主時鐘控制，光線是主要對時訊號，透過褪黑激素影響睡意。</li>
+<li>被引用於：<a class="wl" href="#concepts-circadian-rhythm">circadian-rhythm</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a></li>
+</ul></article>
+<article id="src-S03" data-path="wiki/sources/S03.md" hidden><div class="path">wiki/sources/S03.md</div><h1>S03｜Cajochen 等（2024）睡眠週期回溯研究</h1>
+<ul>
+<li>等級：B（同儕審查原始研究）　原始紀錄：<code>raw/S03-cajochen-2024-ultradian-sleep-cycles.md</code></li>
+<li>一句話：369 人、6,064 個週期，週期中位數 96 分鐘、95% 在 60–150 分鐘，同一晚內變異最大。</li>
+<li>被引用於：<a class="wl" href="#concepts-sleep-cycle">sleep-cycle</a>、<a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a></li>
+</ul></article>
+<article id="src-S04" data-path="wiki/sources/S04.md" hidden><div class="path">wiki/sources/S04.md</div><h1>S04｜O'Callaghan 等（2018）咖啡因與睡眠品質綜述</h1>
+<ul>
+<li>等級：A（同儕審查綜述）　原始紀錄：<code>raw/S04-ocallaghan-2018-caffeine-sleep.md</code></li>
+<li>一句話：咖啡因阻斷腺苷受體，半衰期 2–10 小時，睡前 6 小時攝取仍會干擾睡眠。</li>
+<li>被引用於：<a class="wl" href="#concepts-caffeine">caffeine</a>、<a class="wl" href="#myths-myth-afternoon-coffee">myth-afternoon-coffee</a></li>
+</ul></article>
+<article id="src-S05" data-path="wiki/sources/S05.md" hidden><div class="path">wiki/sources/S05.md</div><h1>S05｜Reichert、Deboer、Landolt（2022）腺苷、咖啡因與睡醒調節綜述</h1>
+<ul>
+<li>等級：A（同儕審查綜述）　原始紀錄：<code>raw/S05-reichert-2022-adenosine-caffeine-review.md</code></li>
+<li>限制：只取得摘要，不引用細節數字。</li>
+<li>一句話：腺苷是公認的體內睡眠調節物質，可能也連結睡眠恆定與生理時鐘。</li>
+<li>被引用於：<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a></li>
+</ul></article>
+<article id="src-S06" data-path="wiki/sources/S06.md" hidden><div class="path">wiki/sources/S06.md</div><h1>S06｜NINDS《Brain Basics: Understanding Sleep》</h1>
+<ul>
+<li>等級：A（NIH 科普）　原始紀錄：<code>raw/S06-ninds-understanding-sleep.md</code></li>
+<li>一句話：睡眠分 NREM 三期 + REM，由生理時鐘與睡醒恆定兩套系統調控；成人建議 7–9 小時。</li>
+<li>被引用於：<a class="wl" href="#concepts-circadian-rhythm">circadian-rhythm</a>、<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a>、<a class="wl" href="#concepts-two-process-model">two-process-model</a>、<a class="wl" href="#concepts-sleep-cycle">sleep-cycle</a>、<a class="wl" href="#myths-myth-8-hours">myth-8-hours</a>、<a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a></li>
+</ul></article>
+<article id="src-S07" data-path="wiki/sources/S07.md" hidden><div class="path">wiki/sources/S07.md</div><h1>S07｜Baur（2024）ETH 博士論文：睡眠限制下咖啡因的影響</h1>
+<ul>
+<li>等級：B（博士論文）　原始紀錄：<code>raw/S07-baur-2024-eth-thesis.md</code></li>
+<li>限制：只讀背景章節前段；作為「腺苷隨清醒累積」與咖啡因藥理的補充來源。</li>
+<li>一句話：腺苷在清醒時累積、深睡時清除；咖啡因佔住 A1/A2A 受體；CYP1A2 與 ADORA2A 造成個人差異。</li>
+<li>被引用於：<a class="wl" href="#concepts-sleep-pressure">sleep-pressure</a>、<a class="wl" href="#concepts-caffeine">caffeine</a>、<a class="wl" href="#myths-myth-afternoon-coffee">myth-afternoon-coffee</a></li>
+</ul></article>
+<article id="src-S08" data-path="wiki/sources/S08.md" hidden><div class="path">wiki/sources/S08.md</div><h1>S08｜calculate.co.nz 睡眠週期計算器</h1>
+<ul>
+<li>等級：C（工具網站）　原始紀錄：<code>raw/S08-calculator-co-nz-sleep-cycle-calculator.md</code></li>
+<li>用途：<strong>只能</strong>當「常見說法」的出處，不能支撐任何事實。</li>
+<li>一句話：假設 90 分鐘一個週期 + 15 分鐘入睡，往回推建議就寢時間。</li>
+<li>被引用於：<a class="wl" href="#myths-myth-90-minutes">myth-90-minutes</a>（僅「常見說法」段落）</li>
+</ul></article>
+<article id="raw-S01" data-path="raw/S01-aasm-sleep-duration-consensus.md" hidden><div class="path">raw/S01-aasm-sleep-duration-consensus.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S01</td></tr><tr><th>title</th><td>Recommended Amount of Sleep for a Healthy Adult (AASM/SRS Joint Consensus Statement)</td></tr><tr><th>authors</th><td>Watson NF, Badr MS, Belenky G, et al. (15 位專家)</td></tr><tr><th>published</th><td>J Clin Sleep Med 2015;11(6):591–592（同步刊於 SLEEP 2015;38(6):843–844）</td></tr><tr><th>doi</th><td>10.5664/jcsm.4758</td></tr><tr><th>url</th><td><a href="https://www.aasm.org/resources/pdf/adultsleepdurationconsensus.pdf" target="_blank" rel="noopener">https://www.aasm.org/resources/pdf/adultsleepdurationconsensus.pdf</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>A（學會共識）</td></tr><tr><th>note</th><td>PMC 版本被 reCAPTCHA 擋下，改抓 AASM 官方 PDF</td></tr></table></div><h2>擷取重點（自行改寫，非原文）</h2>
+<ul>
+<li>建議 18–60 歲成人「規律地每晚睡 7 小時以上」以維持最佳健康。</li>
+<li>沒有設定上限；規律睡超過 9 小時，對年輕人、正在補睡眠債的人、生病的人可能是合適的；其他人睡超過 9 小時是否有健康風險，證據不確定。</li>
+<li>個人睡眠需求受基因、行為、醫療、環境因素影響。</li>
+<li>健康睡眠除了時數，還包括品質、時間點、規律性、沒有睡眠障礙；但這份聲明只針對時數提出建議。</li>
+<li>長期少於 7 小時與體重增加/肥胖、糖尿病、高血壓、心臟病/中風、憂鬱、死亡風險升高，以及免疫力下降、疼痛增加、表現變差、錯誤與意外增加有關（關聯，非因果）。</li>
+<li>方法：15 位專家、修正版 RAND Appropriateness Method、檢索 5,314 篇文獻、評估 9 類健康結果，歷時 12 個月，2015 年 2 月於芝加哥達成共識。</li>
+</ul></article>
+<article id="raw-S02" data-path="raw/S02-nigms-circadian-rhythms.md" hidden><div class="path">raw/S02-nigms-circadian-rhythms.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S02</td></tr><tr><th>title</th><td>Circadian Rhythms (Fact Sheet)</td></tr><tr><th>publisher</th><td>National Institute of General Medical Sciences (NIGMS), NIH</td></tr><tr><th>url</th><td><a href="https://nigms.nih.gov/education/fact-sheets/Pages/Circadian-Rhythms.aspx" target="_blank" rel="noopener">https://nigms.nih.gov/education/fact-sheets/Pages/Circadian-Rhythms.aspx</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>A（政府機構科普）</td></tr></table></div><h2>擷取重點（自行改寫）</h2>
+<ul>
+<li>生理時鐘節律（circadian rhythms）：身體、心理、行為以約 24 小時為週期的變化，大多數生物都有。</li>
+<li>最主要的外在線索是光暗；進食、壓力、運動、社交環境、溫度也有影響。</li>
+<li>影響睡眠模式、荷爾蒙分泌、食慾與消化、體溫。</li>
+<li>主時鐘（master clock）位於腦中的視交叉上核（SCN），負責同步其他器官與組織的時鐘。</li>
+<li>SCN 依據眼睛接收到的光調控褪黑激素（melatonin）；傍晚促使分泌增加，讓人想睡。</li>
+<li>2017 年 Hall、Rosbash、Young 因發現果蠅 PER 蛋白調控日節律獲諾貝爾獎。</li>
+<li>跨時區旅行（時差）與輪班工作會打亂睡醒週期。</li>
+<li>短期失調：嗜睡、專注力差；長期失調：與肥胖、糖尿病、情緒障礙、心血管問題、癌症風險升高有關。</li>
+<li>頁面附圖：典型青少年約 23 點開始想睡，凌晨 3–7 點是低谷。</li>
+</ul></article>
+<article id="raw-S03" data-path="raw/S03-cajochen-2024-ultradian-sleep-cycles.md" hidden><div class="path">raw/S03-cajochen-2024-ultradian-sleep-cycles.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S03</td></tr><tr><th>title</th><td>Ultradian sleep cycles: Frequency, duration, and associations with individual and environmental factors — A retrospective study</td></tr><tr><th>authors</th><td>Cajochen C, Reichert CF, Münch M, Gabel V, Stefani O, Chellappa SL, Schmidt C</td></tr><tr><th>published</th><td>Sleep Health 2024;10:S52–S62</td></tr><tr><th>url</th><td><a href="https://eprints.soton.ac.uk/502837/1/1-s2.0-S2352721823002048-main.pdf" target="_blank" rel="noopener">https://eprints.soton.ac.uk/502837/1/1-s2.0-S2352721823002048-main.pdf</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>B（同儕審查原始研究）</td></tr></table></div><h2>擷取重點（自行改寫）</h2>
+<ul>
+<li>設計：回溯分析巴塞爾時間生物學中心的多導睡眠圖（PSG）資料；369 位健康、睡眠良好的成人（19–35 歲與 55–80 歲）；在實驗室有 8 小時睡眠機會、於平常就寢時間入睡；共 1,054 晚、6,064 個睡眠週期。</li>
+<li>週期長度：中位數 96 分鐘（平均 99.5 分鐘）；95% 的週期落在 60–150 分鐘。</li>
+<li>變異來源：同一晚不同週期之間變異最大（CV 29.3%），其次是不同晚（18.5%），再其次是不同人（12.7%）。</li>
+<li>一晚之中：第一個週期較短，主要因為第一段 REM 很短；REM 隨週期 1→4 逐漸變長。</li>
+<li>年齡較大者 NREM 較長、REM 較短；女性第 2 週期 NREM 較長。</li>
+<li>睡眠壓力高（清醒 40 小時）→ 第一個週期 NREM 變長；睡眠壓力低（多次小睡）→ REM 變長。</li>
+<li>中等程度的睡前光線、夜間交通噪音沒有顯著影響。</li>
+<li>結論：睡眠週期是內生節律，受年齡、性別、睡眠壓力影響。</li>
+</ul>
+<h2>讀取時注意</h2>
+<ul>
+<li>文中資料收集年份前後不一致（一處寫 1994–2020，Methods 寫 1994–2000）→ 已記入 log，Wiki 不引用年份。</li>
+</ul></article>
+<article id="raw-S04" data-path="raw/S04-ocallaghan-2018-caffeine-sleep.md" hidden><div class="path">raw/S04-ocallaghan-2018-caffeine-sleep.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S04</td></tr><tr><th>title</th><td>Effects of caffeine on sleep quality and daytime functioning</td></tr><tr><th>authors</th><td>O&#x27;Callaghan F, Muurlink O, Reid N</td></tr><tr><th>published</th><td>Risk Manag Healthc Policy 2018;11:263–271</td></tr><tr><th>doi</th><td>10.2147/RMHP.S156404</td></tr><tr><th>url</th><td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6292246" target="_blank" rel="noopener">https://pmc.ncbi.nlm.nih.gov/articles/PMC6292246</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>A（同儕審查綜述）</td></tr></table></div><h2>擷取重點（自行改寫）</h2>
+<ul>
+<li>機轉：咖啡因是腺苷受體拮抗劑（adenosine-receptor antagonist），主要作用在 A1、A2A 受體。</li>
+<li>攝取後約 30 分鐘血中濃度達高峰。</li>
+<li>半衰期變異大，約 2–10 小時，受體內外因素影響；吸菸可使代謝加快多達 50%。</li>
+<li>會降低隔晚褪黑激素主要代謝物的量。</li>
+<li>Drake 等（2013）：400 mg（約 4 杯現煮咖啡）在睡前 0、3、6 小時服用，即使睡前 6 小時服用也顯著干擾睡眠（相對於安慰劑）。</li>
+<li>早上 7 點服用 200 mg 也有研究發現當晚睡眠效率與總睡眠時間下降（Landolt 等）。</li>
+<li>耐受性：據模型估計，耐受效果消退可能需要長達 20 小時（4–5 個半衰期）。</li>
+<li>結論：咖啡因對認知與體能有可測的正面效果，但對睡眠的負面影響也很顯著；隔天的「提神」有一部分可能只是在解除戒斷症狀。</li>
+<li>這篇沒有給出建議的停喝時間或每日上限。</li>
+</ul></article>
+<article id="raw-S05" data-path="raw/S05-reichert-2022-adenosine-caffeine-review.md" hidden><div class="path">raw/S05-reichert-2022-adenosine-caffeine-review.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S05</td></tr><tr><th>title</th><td>Adenosine, caffeine, and sleep-wake regulation: state of the science and perspectives</td></tr><tr><th>authors</th><td>Reichert CF, Deboer T, Landolt HP</td></tr><tr><th>published</th><td>J Sleep Res 2022;31(4):e13597</td></tr><tr><th>doi</th><td>10.1111/jsr.13597</td></tr><tr><th>url</th><td><a href="https://scholarlypublications.universiteitleiden.nl/handle/1887/3502470" target="_blank" rel="noopener">https://scholarlypublications.universiteitleiden.nl/handle/1887/3502470</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>A（同儕審查綜述）</td></tr><tr><th>note</th><td>PubMed/PMC 與 ZORA 皆被機器人防護擋下；只取得摘要層級內容 → 只能引用摘要層級的說法</td></tr></table></div><h2>擷取重點（自行改寫，限摘要）</h2>
+<ul>
+<li>約 70 年前，腺苷被提出是咖啡因所阻斷的那個受體配體；之後被證實。</li>
+<li>今天腺苷被廣泛接受為體內的「睡眠調節物質」（endogenous sleep-regulatory substance）。</li>
+<li>綜述討論：腺苷在睡眠恆定（sleep homeostasis）中的直接角色；咖啡因急性 vs 長期使用的效果是否不同。</li>
+<li>也回顧證據指出腺苷可能影響生理時鐘，並探討腺苷是否連結了睡眠恆定與生理時鐘。</li>
+</ul></article>
+<article id="raw-S06" data-path="raw/S06-ninds-understanding-sleep.md" hidden><div class="path">raw/S06-ninds-understanding-sleep.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S06</td></tr><tr><th>title</th><td>Brain Basics: Understanding Sleep</td></tr><tr><th>publisher</th><td>National Institute of Neurological Disorders and Stroke (NINDS), NIH</td></tr><tr><th>url</th><td><a href="https://www.ninds.nih.gov/Disorders/Patient-Caregiver-Education/Understanding-Sleep" target="_blank" rel="noopener">https://www.ninds.nih.gov/Disorders/Patient-Caregiver-Education/Understanding-Sleep</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>A（政府機構科普）</td></tr></table></div><h2>擷取重點（自行改寫）</h2>
+<ul>
+<li>睡眠分 NREM（第 1、2、3 期）與 REM；一晚會循環好幾次（頁面沒有給週期長度或次數）。</li>
+<li>第 1 期：幾分鐘，從清醒轉入睡眠。第 2 期：心跳呼吸更慢、體溫下降、眼動停止。第 3 期：深睡，前半夜較長，最難叫醒。</li>
+<li>REM：入睡後約 90 分鐘第一次出現；眼球快速轉動、腦波接近清醒、多數夢在此發生、手腳肌肉暫時麻痺；越到後半夜 REM 越長；年紀越大 REM 越少。</li>
+<li>兩套系統調控睡眠：生理時鐘（circadian rhythms）＋睡醒恆定（sleep-wake homeostasis）；清醒每多一小時，睡眠驅力越強。</li>
+<li>腺苷由細胞釋放、讓人想睡；咖啡因阻斷腺苷的作用。（注意：此頁沒有說腺苷「隨清醒時間累積」。）</li>
+<li>褪黑激素由松果體分泌，接收 SCN 訊號，天黑時讓人想睡。</li>
+<li>建議睡眠量：成人每晚 7–9 小時；學齡兒童與青少年約 9.5 小時；嬰兒 16–18 小時。</li>
+</ul>
+<h2>補記（lint 後追加，2026-11-10）</h2>
+<ul>
+<li>生理時鐘以 24 小時為基礎，調控每日的清醒程度、體溫、代謝與荷爾蒙分泌。（ingest 時漏記，lint L5 抓到後回原頁確認再補）</li>
+</ul></article>
+<article id="raw-S07" data-path="raw/S07-baur-2024-eth-thesis.md" hidden><div class="path">raw/S07-baur-2024-eth-thesis.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S07</td></tr><tr><th>title</th><td>Acute and chronic sleep restriction: Effects of caffeine on the EEG and heart rate during sleep, and waking attention</td></tr><tr><th>authors</th><td>Baur DM</td></tr><tr><th>published</th><td>Doctoral thesis, ETH Zurich, 2024 (Diss. ETH No. 30328)</td></tr><tr><th>url</th><td><a href="https://www.research-collection.ethz.ch/server/api/core/bitstreams/ba7384e4-aa8b-49bc-b891-9635711ce974/content" target="_blank" rel="noopener">https://www.research-collection.ethz.ch/server/api/core/bitstreams/ba7384e4-aa8b-49bc-b891-9635711ce974/content</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>B（博士論文，含同儕審查章節）</td></tr><tr><th>note</th><td>原本以為這個網址是 S05 綜述的全文，實際上是另一份文件 → 改以獨立來源 ingest，只取背景介紹章節</td></tr></table></div><h2>擷取重點（自行改寫，只讀前 100k 字元）</h2>
+<ul>
+<li>腺苷在長時間清醒時累積、讓人想睡，在深睡期間被清除，睡眠壓力因此下降。</li>
+<li>腺苷來自 ATP 等能量分子的分解。</li>
+<li>A1 受體活化 → 抑制促清醒神經元；A2A 受體集中在紋狀體/伏隔核，協助進入睡眠。</li>
+<li>咖啡因結構與腺苷相似，能佔住 A1、A2A 受體但不活化 → 拮抗。</li>
+<li>99% 以上在肝臟代謝，主要酵素 CYP1A2；吸菸會提升該酵素活性。</li>
+<li>攝取後 30–120 分鐘血中濃度達高峰（與 S04 的「約 30 分鐘」不同 → 見 log）。</li>
+<li>長期攝取：耐受性會發展但不完全；一項研究中，睡眠受限多晚後每天 300–450 mg 咖啡因並未改善警覺。</li>
+<li>ADORA2A 基因變異會影響咖啡因對警覺、焦慮、睡眠的效果 → 個人敏感度差異。</li>
+</ul></article>
+<article id="raw-S08" data-path="raw/S08-calculator-co-nz-sleep-cycle-calculator.md" hidden><div class="path">raw/S08-calculator-co-nz-sleep-cycle-calculator.md</div><div class="tablewrap"><table class="meta"><tr><th>id</th><td>S08</td></tr><tr><th>title</th><td>Bedtime Sleep Cycle Calculator</td></tr><tr><th>publisher</th><td>calculate.co.nz（線上計算器網站）</td></tr><tr><th>url</th><td><a href="https://www.calculate.co.nz/bedtime-sleep-cycle-calculator.php" target="_blank" rel="noopener">https://www.calculate.co.nz/bedtime-sleep-cycle-calculator.php</a></td></tr><tr><th>fetched</th><td>2026-11-10</td></tr><tr><th>grade</th><td>C（商業/工具網站）— 刻意納入，作為「常見說法」的代表，用來測試 lint 是否擋得住</td></tr></table></div><h2>擷取重點（自行改寫）</h2>
+<ul>
+<li>假設每個睡眠週期 90 分鐘，入睡需要 15 分鐘。</li>
+<li>用起床時間往回推整數個週期，建議 4、5、6 個週期（約 6、7.5、9 小時）。</li>
+<li>宣稱在週期結束的淺睡時醒來，會比較清醒、不昏沉。</li>
+<li>頁面本身也承認週期長度因人而異、計算器只是參考。</li>
+</ul></article>
+<article id="check-slides" data-path="check_slides.py" hidden><div class="path">check_slides.py</div><h1>check_slides.py</h1><pre><code>&quot;&quot;&quot;Post-generation check: does every slide say only what the wiki&#x27;s raw sources support?
+
+  C1 a cited source ID does not exist in raw/
+  C2 a number on a slide cannot be found in the raw file(s) of the sources cited in that block
+     (blocks without their own citation fall back to the slide&#x27;s data-src)
+  C3 a C-grade source is cited on a slide that is not a myth slide
+  C4 the slide&#x27;s data-src does not match the citations actually shown
+  C5 a phrase the wiki marked as forbidden appears (e.g. a single-number half-life)
+Blocks inside [data-nocheck] are illustrative (charts, formula-based estimates) and skipped.
+&quot;&quot;&quot;
+import re, sys
+from pathlib import Path
+from bs4 import BeautifulSoup
+
+ROOT = Path(__file__).resolve().parent
+raw = {p.name[:3]: p.read_text(encoding=&quot;utf-8&quot;) for p in (ROOT / &quot;raw&quot;).glob(&quot;S0*.md&quot;)}
+grade = {k: re.search(r&quot;^grade:\s*([ABC])&quot;, v, re.M).group(1) for k, v in raw.items()}
+soup = BeautifulSoup((ROOT / &quot;slides/sleep-slides.html&quot;).read_text(encoding=&quot;utf-8&quot;), &quot;html.parser&quot;)
+FORBID = [(r&quot;半衰期[^。]{0,6}(約|是|為)\s*\d+\s*小時&quot;, &quot;single-number half-life&quot;),
+          (r&quot;週期\s*(=|就是|剛好是)\s*90&quot;, &quot;cycle stated as exactly 90&quot;),
+          (r&quot;平均\s*5\s*小時&quot;, &quot;unsourced &#x27;average 5 hours&#x27;&quot;)]
+NUM = re.compile(r&quot;(?&lt;![A-Za-z0-9.,])(\d+(?:,\d{3})*(?:\.\d+)?)(?![A-Za-z0-9])&quot;)
+issues = []
+for idx, s in enumerate(soup.select(&quot;section.slide&quot;), 1):
+    for nc in s.select(&quot;[data-nocheck]&quot;):
+        nc.decompose()
+    slide_src = s.get(&quot;data-src&quot;, &quot;&quot;).split()
+    shown = set()
+    for blk in s.select(&quot;li, p, h2, h3, .big, .verdict&quot;):
+        if blk.find([&quot;li&quot;, &quot;p&quot;]):
+            continue
+        cites = [c.get_text(strip=True) for c in blk.select(&quot;.cite&quot;)]
+        shown.update(cites)
+        for c in blk.select(&quot;.cite, .tag&quot;):
+            c.extract()
+        text = blk.get_text(&quot; &quot;, strip=True)
+        if blk.get(&quot;class&quot;) and &quot;big&quot; in blk[&quot;class&quot;]:
+            sib = blk.find_next_sibling()
+            cites = cites or [c for c in re.findall(r&quot;S0\d&quot;, str(sib))]
+        for c in cites:
+            if c not in raw:
+                issues.append((idx, &quot;C1&quot;, f&quot;cites missing {c}&quot;))
+        pool = cites or slide_src
+        rawtext = &quot; &quot;.join(raw.get(c, &quot;&quot;) for c in pool)
+        for n in NUM.findall(text):
+            if not pool:
+                issues.append((idx, &quot;C2&quot;, f&quot;number {n} with no source: {text[:40]}&quot;))
+            elif n not in rawtext:
+                issues.append((idx, &quot;C2&quot;, f&quot;number {n} not in {&#x27;/&#x27;.join(pool)}: {text[:40]}&quot;))
+        for pat, why in FORBID:
+            if re.search(pat, text):
+                issues.append((idx, &quot;C5&quot;, f&quot;{why}: {text[:40]}&quot;))
+    for c in shown:
+        if grade.get(c) == &quot;C&quot; and not s.get(&quot;data-wiki&quot;, &quot;&quot;).startswith(&quot;myths/&quot;):
+            issues.append((idx, &quot;C3&quot;, f&quot;C-grade {c} on non-myth slide&quot;))
+    if set(slide_src) != shown and slide_src:
+        issues.append((idx, &quot;C4&quot;, f&quot;data-src {sorted(slide_src)} vs shown {sorted(shown)}&quot;))
+for i in issues:
+    print(f&quot;slide {i[0]:&gt;2}  {i[1]}  {i[2]}&quot;)
+print(f&quot;\n{len(issues)} issue(s)&quot;)
+sys.exit(1 if issues else 0)
+</code></pre></article>
+<article id="lint" data-path="lint.py" hidden><div class="path">lint.py</div><h1>lint.py</h1><pre><code>&quot;&quot;&quot;Programmatic lint for the sleep-science LLM Wiki.
+
+Checks (from SCHEMA.md):
+  L1 broken [[links]]
+  L2 orphan pages (not linked from index or any other page)
+  L3 citations [Sxx] that point to a missing source
+  L4 C-grade sources cited outside a myth page&#x27;s &quot;常見說法&quot; section
+  L5 numbers on concept/myth pages that cannot be found in the cited raw file(s)
+  L6 concept/myth pages missing a 生活例子 section
+&quot;&quot;&quot;
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+WIKI = ROOT / &quot;wiki&quot;
+RAW = ROOT / &quot;raw&quot;
+
+pages = {p.stem: p for p in WIKI.rglob(&quot;*.md&quot;)}
+raw_by_id = {p.name[:3]: p for p in RAW.glob(&quot;S0*.md&quot;)}
+grade = {}
+for sid, p in raw_by_id.items():
+    m = re.search(r&quot;^grade:\s*([ABC])&quot;, p.read_text(encoding=&quot;utf-8&quot;), re.M)
+    grade[sid] = m.group(1) if m else &quot;?&quot;
+
+issues = []
+linked = set()
+
+for name, path in pages.items():
+    text = path.read_text(encoding=&quot;utf-8&quot;)
+    rel = path.relative_to(ROOT)
+    # L1
+    for link in re.findall(r&quot;\[\[([^\]]+)\]\]&quot;, text):
+        linked.add(link)
+        if link not in pages:
+            issues.append((&quot;L1&quot;, rel, f&quot;broken link [[{link}]]&quot;))
+    # L3
+    for sid in set(re.findall(r&quot;\[(S0\d)\]&quot;, text)):
+        if sid not in raw_by_id:
+            issues.append((&quot;L3&quot;, rel, f&quot;cites missing source {sid}&quot;))
+    is_content = path.parent.name in (&quot;concepts&quot;, &quot;myths&quot;)
+    if not is_content:
+        continue
+    # L4
+    sections = re.split(r&quot;^## &quot;, text, flags=re.M)
+    for sec in sections:
+        title = sec.splitlines()[0] if sec else &quot;&quot;
+        for sid in set(re.findall(r&quot;\[(S0\d)\]&quot;, sec)):
+            if grade.get(sid) == &quot;C&quot; and &quot;常見說法&quot; not in title:
+                issues.append((&quot;L4&quot;, rel, f&quot;C-grade {sid} used as evidence in section &#x27;{title}&#x27;&quot;))
+    # L5 — check each line&#x27;s numbers against that line&#x27;s cited raw sources
+    for line in text.splitlines():
+        cites = re.findall(r&quot;\[(S0\d)\]&quot;, line)
+        if not cites or &quot;推論&quot; in line:
+            continue
+        nums = re.findall(r&quot;(?&lt;![A-Za-z0-9.])(\d+(?:\.\d+)?)(?![A-Za-z0-9])&quot;, line)
+        nums = [n for n in nums if not re.fullmatch(r&quot;0\d&quot;, n)]
+        raw_text = &quot; &quot;.join(raw_by_id[s].read_text(encoding=&quot;utf-8&quot;) for s in cites if s in raw_by_id)
+        for n in nums:
+            if n not in raw_text:
+                issues.append((&quot;L5&quot;, rel, f&quot;number {n} not found in {&#x27;,&#x27;.join(cites)}: {line.strip()[:60]}…&quot;))
+    # L6
+    if path.parent.name == &quot;concepts&quot; and &quot;生活例子&quot; not in text:
+        issues.append((&quot;L6&quot;, rel, &quot;no 生活例子 section&quot;))
+
+# L2
+for name, path in pages.items():
+    if name in (&quot;index&quot;, &quot;log&quot;):
+        continue
+    if name not in linked:
+        issues.append((&quot;L2&quot;, path.relative_to(ROOT), &quot;orphan page&quot;))
+
+for code, rel, msg in sorted(issues, key=lambda x: (x[0], str(x[1]))):
+    print(f&quot;{code}  {rel}  {msg}&quot;)
+print(f&quot;\n{len(issues)} issue(s)&quot;)
+sys.exit(1 if issues else 0)
+</code></pre></article>
+  <div class="pager"><a id="pv" href="#">← 上一頁</a><a id="nx" href="#">下一頁 →</a></div>
+ </main>
+</div>
+<script>
+(function(){
+  const arts=[...document.querySelectorAll('article')];
+  const ids=arts.map(a=>a.id);
+  const links=[...document.querySelectorAll('nav a')];
+  const pv=document.getElementById('pv'), nx=document.getElementById('nx');
+  function show(){
+    const h=location.hash.slice(1);
+    const id=ids.includes(h)?h:ids[0];
+    arts.forEach(a=>{a.hidden=a.id!==id});
+    links.forEach(l=>l.classList.toggle('on',l.dataset.id===id));
+    const i=ids.indexOf(id);
+    pv.hidden=i===0; nx.hidden=i===ids.length-1;
+    if(i>0){pv.href='#'+ids[i-1];pv.textContent='← '+(document.querySelector('nav a[data-id="'+ids[i-1]+'"]')||{}).textContent}
+    if(i<ids.length-1){nx.href='#'+ids[i+1];nx.textContent=(document.querySelector('nav a[data-id="'+ids[i+1]+'"]')||{}).textContent+' →'}
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show);
+  show();
+})();
+</script>
+
+</body>
+</html>
